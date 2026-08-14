@@ -366,3 +366,155 @@ footer { max-width:1294px; margin:0 auto; padding:24px; }
   .conclusion { grid-template-columns:1fr; }
   footer { margin:0 20px; }
 }
+
+/* Reader scale: larger type with proportional spacing and reflow */
+body { font-size:16px; }
+.site-header { min-height:86px; }
+.brand-mark { width:62px; height:54px; font-size:17px; }
+.brand strong { font-size:17px; }
+.brand small { font-size:8px; line-height:1.35; }
+.header-nav button { min-width:132px; padding:0 12px; }
+.header-nav strong { font-size:16px; }
+.internal-state { font-size:10px; }
+.lang-toggle button { min-width:48px; height:42px; font-size:9px; }
+.page-intro,.page-intro-inner { min-height:410px; }
+.page-intro-inner { padding-top:52px; padding-bottom:66px; }
+.page-intro .eyebrow { font-size:11px; }
+.page-intro p { max-width:1060px; font-size:19px; line-height:1.85; }
+.hero-meta { bottom:66px; padding:15px 20px; font-size:9px; }
+.view>section,
+.view>.report-toolbar,
+.view>.report-cta,
+.view>.data-note,
+.view>.database-note {
+  width:calc(100% - clamp(40px,9vw,160px));
+  max-width:1380px;
+}
+.view>section { margin-bottom:88px; }
+.eyebrow { font-size:11px; }
+.section-heading { padding-bottom:22px; }
+.section-heading h2 { font-size:clamp(38px,3.7vw,58px); }
+.count { font-size:50px; }
+.signal-card,.signal-card.dark {
+  min-height:430px;
+  padding:44px 42px;
+}
+.card-top { font-size:10px; }
+.signal-card h3,.signal-card.dark h3 {
+  margin:34px 0 20px;
+  font-size:31px;
+  line-height:1.42;
+}
+.signal-card>p,.signal-card.dark>p {
+  font-size:16px;
+  line-height:1.9;
+}
+.why,.signal-card.dark .why {
+  margin-top:28px;
+  padding-left:16px;
+  font-size:14px;
+  line-height:1.8;
+}
+.why span { font-size:9px; margin-bottom:5px; }
+.signal-card a,.signal-card.dark a { font-size:13px; padding-top:28px; }
+.impact-section { padding-top:46px; }
+.impact-grid>div { padding:42px 38px 36px; }
+.impact-grid small { font-size:11px; }
+.impact-grid h3 { margin-top:18px; font-size:21px; line-height:1.55; }
+.impact-grid p { font-size:14px; line-height:1.85; }
+.impact-icon { font-size:44px; }
+.numbers-section { gap:72px; }
+.numbers-section h2 { font-size:32px; }
+.numbers-section p { font-size:14px; line-height:1.85; }
+.number-grid div { padding:31px 22px; }
+.number-grid strong { font-size:44px; }
+.number-grid span { display:block; margin-top:10px; font-size:12px; line-height:1.5; }
+.report-cta { padding:44px 48px; }
+.report-cta h2 { font-size:31px; }
+.report-cta p { font-size:14px; line-height:1.7; }
+.report-cta button { padding:16px 20px; font-size:14px; }
+.data-note { font-size:11px; line-height:1.7; }
+.report-toolbar { padding:25px 28px; }
+.report-toolbar select { font-size:15px; }
+.report-state strong { font-size:14px; }
+.report-state small { font-size:10px; }
+.conclusion { grid-template-columns:300px 1fr; column-gap:65px; }
+.conclusion>h2 { font-size:32px; }
+.conclusion-list>div { grid-template-columns:58px 1fr; padding:26px 0; }
+.conclusion-list span { font-size:28px; }
+.conclusion-list p { font-size:15px; line-height:1.85; }
+.flow>div { padding:30px; }
+.flow small { font-size:9px; }
+.flow strong { font-size:21px; line-height:1.45; }
+.flow span { font-size:13px; line-height:1.7; }
+.assessment { padding:21px 24px; font-size:14px; line-height:1.8; }
+.assessment span { font-size:9px; }
+.decision-table>div { grid-template-columns:95px 2.3fr 1fr .7fr 1.4fr; padding:20px 14px; font-size:13px; line-height:1.55; }
+.decision-table .table-head { font-size:9px; }
+.priority { font-size:9px; padding:6px 8px; }
+.swot { min-height:215px; padding:32px; grid-template-columns:55px 1fr; }
+.swot>span { font-size:41px; }
+.swot small { font-size:9px; }
+.swot h3 { margin:9px 0 15px; font-size:20px; }
+.swot ul { font-size:13px; line-height:1.9; }
+.coverage h2 { font-size:30px; }
+.coverage-grid div { padding:23px; }
+.coverage-grid small { font-size:10px; }
+.coverage-grid strong { font-size:14px; }
+.coverage>p { font-size:13px; line-height:1.85; }
+.method-stats>div { padding:24px; }
+.method-stats small { font-size:9px; }
+.method-stats strong { font-size:35px; }
+.method-stats span { font-size:11px; line-height:1.5; }
+.database-panel { margin-bottom:28px; }
+.filters { grid-template-columns:1fr 210px 230px; gap:14px; padding-bottom:28px; }
+.filters label:not(.search)>span { font-size:9px; }
+.filters select,.filters input { padding:14px 15px; font-size:13px; }
+.search>span { top:10px; font-size:25px; }
+.search input { padding-left:48px; }
+.results-meta { padding:19px 2px; font-size:11px; }
+.intel-list article { grid-template-columns:74px 1fr 145px 145px 30px; gap:22px; padding:25px 10px; }
+.intel-date strong { font-size:23px; }
+.intel-date small { font-size:9px; }
+.intel-meta>span { font-size:9px; }
+.intel-content h3 { margin:9px 0 6px; font-size:16px; line-height:1.5; }
+.intel-content p { font-size:11px; line-height:1.5; }
+.intel-company small { font-size:8px; }
+.intel-company strong { font-size:12px; }
+.status { font-size:9px; }
+.row-action { font-size:20px; }
+.database-note p { font-size:13px; line-height:1.75; }
+footer { max-width:1380px; font-size:10px; line-height:1.7; }
+
+@media (max-width:1180px) {
+  .signal-grid.two { grid-template-columns:1fr; }
+  .signal-card { border-left:1px solid #cfd1cb; }
+  .impact-grid { grid-template-columns:1fr; }
+  .impact-grid>div { border-left:1px solid #cfd1cb; border-bottom:1px solid #cfd1cb; }
+  .numbers-section { grid-template-columns:1fr; gap:30px; }
+}
+
+@media (max-width:760px) {
+  .site-header { min-height:72px; }
+  .brand-mark { width:48px; height:45px; font-size:14px; }
+  .brand strong { font-size:13px; }
+  .lang-toggle button { min-width:36px; height:34px; }
+  .page-intro,.page-intro-inner { min-height:420px; }
+  .page-intro-inner { padding:42px 22px 50px; }
+  .page-intro p { font-size:16px; }
+  .view>section,
+  .view>.report-toolbar,
+  .view>.report-cta,
+  .view>.data-note,
+  .view>.database-note { width:calc(100% - 32px); }
+  .section-heading h2 { font-size:36px; }
+  .signal-card,.signal-card.dark { min-height:auto; padding:32px 24px; }
+  .signal-card h3,.signal-card.dark h3 { margin-top:28px; font-size:27px; }
+  .signal-card>p,.signal-card.dark>p { font-size:15px; }
+  .why,.signal-card.dark .why { font-size:13px; }
+  .impact-grid>div { padding:32px 24px; }
+  .report-cta { padding:34px 26px; }
+  .conclusion { grid-template-columns:1fr; }
+  .filters { grid-template-columns:1fr; }
+  .intel-list article { grid-template-columns:50px 1fr 24px; gap:12px; padding:22px 5px; }
+}
