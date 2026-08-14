@@ -55,6 +55,9 @@ section { margin-bottom:66px; }
 .section-heading h2 { font:400 25px Georgia,"Noto Serif TC",serif; margin:6px 0 0; }
 .count { font:italic 35px Georgia,serif; color:#c9c8c0; }
 .signal-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+.signal-grid.two { grid-template-columns:repeat(2,1fr); }
+.row-action { text-decoration:none; }
+@media (max-width:1050px){.signal-grid.two{grid-template-columns:1fr}}
 .signal-card { background:var(--white); border:1px solid #ddd9cf; padding:25px; min-height:365px; display:flex; flex-direction:column; transition:transform .2s,box-shadow .2s; }
 .signal-card:hover { transform:translateY(-3px); box-shadow:0 16px 34px rgba(26,50,55,.08); }
 .signal-card.featured { border-top:4px solid var(--orange); }
