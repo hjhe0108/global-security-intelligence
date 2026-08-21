@@ -479,6 +479,8 @@ body { font-size:16px; }
 .intel-meta>span { font-size:9px; }
 .intel-content h3 { margin:9px 0 6px; font-size:16px; line-height:1.5; }
 .intel-content p { font-size:11px; line-height:1.5; }
+.related-source { color:var(--teal); font-weight:700; text-decoration:none; }
+.related-source:hover { text-decoration:underline; }
 .intel-company small { font-size:8px; }
 .intel-company strong { font-size:12px; }
 .status { font-size:9px; }
