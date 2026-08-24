@@ -26,8 +26,10 @@ test("server-renders the security intelligence portal", async () => {
   assert.match(html, /情報資料庫/);
   assert.match(html, /W35/);
   assert.match(html, /資料與分析截至 08\.24/);
-  assert.match(html, /ALPR 市場並未因 Flock 反彈而消失/);
+  assert.match(html, /ALPR 競爭正轉向替代供應商與資料控制/);
   assert.match(html, /反 Flock 壓力正在創造轉換商機/);
+  assert.match(html, /DFR 從試辦走向可量化的日常營運/);
+  assert.match(html, /Drone／DFR/);
   assert.match(html, /Language/);
   assert.doesNotMatch(html, /codex-preview|Building your site|Your site is taking shape/i);
 });
