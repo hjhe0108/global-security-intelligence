@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
 import test from "node:test";
 
 async function render() {
@@ -26,9 +27,10 @@ test("server-renders the security intelligence portal", async () => {
   assert.match(html, /情報資料庫/);
   assert.match(html, /W35/);
   assert.match(html, /資料與分析截至 08\.24/);
-  assert.match(html, /ALPR 競爭正轉向替代供應商與資料控制/);
+  assert.match(html, /ALPR 競爭轉向替代供應商與資料控制/);
   assert.match(html, /反 Flock 壓力正在創造轉換商機/);
   assert.match(html, /DFR 從試辦走向可量化的日常營運/);
+  assert.match(html, /機場威脅事件正在轉化為國家級反無人機能力擴張/);
   assert.match(html, /Drone／DFR/);
   assert.match(html, /Language/);
   assert.doesNotMatch(html, /codex-preview|Building your site|Your site is taking shape/i);
@@ -40,8 +42,18 @@ test("renders the requested market-report visual structure", async () => {
 
   assert.match(html, /class="site-header"/);
   assert.match(html, /class="page-intro"/);
-  assert.match(html, /class="signal-grid"/);
+  assert.match(html, /class="signal-grid two"/);
   assert.match(html, /INTERNAL/);
   assert.match(html, /中文/);
   assert.match(html, />EN</);
+});
+
+test("includes verified Europe and Middle East regional records", async () => {
+  const source = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
+  assert.match(source, /region: "Europe-DE"/);
+  assert.match(source, /region: "Europe-FR"/);
+  assert.match(source, /region: "Middle East"/);
+  assert.match(source, /法國憲兵破獲監獄無人機運毒網/);
+  assert.match(source, /阿布達比完成第二次自主巡邏船實地試驗/);
+  assert.match(source, /柏林規劃在 Kottbusser Tor/);
 });
