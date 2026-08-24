@@ -25,7 +25,9 @@ test("server-renders the security intelligence portal", async () => {
   assert.match(html, /市場分析報告/);
   assert.match(html, /情報資料庫/);
   assert.match(html, /W35/);
-  assert.match(html, /最新資料至 08\.24/);
+  assert.match(html, /資料與分析截至 08\.24/);
+  assert.match(html, /ALPR 市場並未因 Flock 反彈而消失/);
+  assert.match(html, /反 Flock 壓力正在創造轉換商機/);
   assert.match(html, /Language/);
   assert.doesNotMatch(html, /codex-preview|Building your site|Your site is taking shape/i);
 });
@@ -36,7 +38,7 @@ test("renders the requested market-report visual structure", async () => {
 
   assert.match(html, /class="site-header"/);
   assert.match(html, /class="page-intro"/);
-  assert.match(html, /class="signal-grid two"/);
+  assert.match(html, /class="signal-grid"/);
   assert.match(html, /INTERNAL/);
   assert.match(html, /中文/);
   assert.match(html, />EN</);
