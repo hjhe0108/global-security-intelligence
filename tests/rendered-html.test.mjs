@@ -24,8 +24,8 @@ test("server-renders the security intelligence portal", async () => {
   assert.match(html, /本週重點/);
   assert.match(html, /市場分析報告/);
   assert.match(html, /情報資料庫/);
-  assert.match(html, /W34/);
-  assert.match(html, /資料截至 08\.14/);
+  assert.match(html, /W35/);
+  assert.match(html, /最新資料至 08\.24/);
   assert.match(html, /Language/);
   assert.doesNotMatch(html, /codex-preview|Building your site|Your site is taking shape/i);
 });
