@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 type View = "weekly" | "report" | "database";
 type Lang = "zh" | "en";
 type IntelStatus = "INDEXED" | "DAILY VERIFIED" | "WEEKLY VERIFIED" | "PENDING" | "EXCLUDED";
+type MarketStage = "未定案" | "導入中" | "已運作" | "研究" | "安全事件";
 type ReportVersion = "live" | "last" | "w31";
 
 const intelligence: Array<{
@@ -44,6 +45,44 @@ const intelligence: Array<{
   { date: "08/14", region: "US", company: "Flock Safety", technology: "ALPR / LPR", technologyEn: "ALPR / LPR", title: "Flock CEO 將部分公眾疑慮歸因於對地方警察的不信任", titleEn: "Flock CEO attributes some public concerns to distrust of local police", source: "Puck · IPVM Brief", sourceEn: "Puck · IPVM Brief", url: "https://puck.news/flock-safetys-ceo-on-crime-privacy-and-backlash/", status: "INDEXED", relevance: "核心", relevanceEn: "Core" },
   { date: "08/14", region: "US", company: "Flock Safety", technology: "ALPR / LPR", technologyEn: "ALPR / LPR", title: "Flock CEO 表示安全與隱私不應被視為二選一", titleEn: "Flock CEO rejects framing safety and privacy as a binary choice", source: "USA Today · IPVM Brief", sourceEn: "USA Today · IPVM Brief", url: "https://www.usatoday.com/story/news/nation/2026/08/13/flock-cameras-update-after-police-abuse-scandals/91272776007/", status: "INDEXED", relevance: "核心", relevanceEn: "Core" },
 ];
+
+const marketStages: Array<{ value: MarketStage; zh: string; en: string }> = [
+  { value: "未定案", zh: "未定案", en: "Planned" },
+  { value: "導入中", zh: "導入中", en: "In progress" },
+  { value: "已運作", zh: "已運作", en: "Operational" },
+  { value: "研究", zh: "研究", en: "Research" },
+  { value: "安全事件", zh: "安全事件", en: "Security incident" },
+];
+
+const stageByUrl: Record<string, MarketStage> = {
+  "https://www.wam.ae/en/article/c1p3son-abu-dhabi-mobility-conducts-2nd-field-trial": "導入中",
+  "https://www.gendarmerie.interieur.gouv.fr/gendinfo/criminalite-organisee-et-enquetes/2026/lutte-contre-le-trafic-de-stupefiants-les-gendarmes-demantelent-un-reseau-de-livraison-de-drogue-par-drone-dans-une-prison": "安全事件",
+  "https://www.tagesschau.de/inland/innenpolitik/bundespolizei-drohnenabwehr-sicherheit-100.html": "未定案",
+  "https://www.tagesschau.de/inland/sicherheit-flughafen-leipzig-drohne-100.html": "安全事件",
+  "https://www.tagesschau.de/inland/regional/berlin/rbb-polizei-startet-projekt-zur-ki-unterstuetzten-videoueberwachung-am-kotti-100.html": "未定案",
+  "https://www.mdpi.com/1999-5903/18/8/412": "研究",
+  "https://www.lebanonmissouri.org/1080/Proposed-Ordinance": "未定案",
+  "https://www.wesh.com/article/police-florida-fake-flock-camera-oviedo-mayor-says/73497418": "安全事件",
+  "https://www.foxnews.com/media/flock-safety-ceo-calls-national-compromise-amid-camera-sabotage-public-revolt": "研究",
+  "https://link.springer.com/article/10.1007/s12103-026-09944-w": "研究",
+  "https://www.independent.com/2026/08/21/city-of-santa-barbara-to-end-contract-with-flock-cameras/": "未定案",
+  "https://linknky.com/news/2026/08/21/covington-weighs-6m-police-tech-deal-for-license-plate-readers-ai-and-drone/": "未定案",
+  "https://www.police1.com/police-products/body-cameras/adopting-body-cameras-without-a-big-city-budget": "研究",
+  "https://www.whsv.com/2026/08/17/luray-flock-camera-vandalism-leads-shootout-with-deputy/": "安全事件",
+  "https://www.publicpurchase.com/gems/mauico%2Chi/buyer/public/publicInfo": "未定案",
+  "https://www.honolulupd.org/hpd-to-launch-drone-as-first-responder-pilot-program-to-strengthen-emergency-response-and-public-safety/": "導入中",
+  "https://www.linkedin.com/feed/update/urn:li:activity:7493743726108798976": "研究",
+  "https://abc7ny.com/post/ice-will-release-body-camera-video-when-seen-agencys-best-interests-policy-says/19640591/": "導入中",
+  "https://www.404media.co/the-government-is-monitoring-anti-flock-tiktok-and-instagram-accounts/": "安全事件",
+  "https://www.kwch.com/2026/08/12/school-security-technology-raises-surveillance-racial-bias-concerns-wichita-city-council-meeting/": "未定案",
+  "https://www.nytimes.com/2026/08/10/briefing/flock-cameras.html": "研究",
+  "https://www.flocksafety.com/blog/flock-lpr-vs-fixed-video-same-camera-body-two-different-jobs": "研究",
+  "https://andrewpwheeler.com/2026/08/12/license-plate-reader-searches-should-require-a-warrant/": "研究",
+  "https://puck.news/flock-safetys-ceo-on-crime-privacy-and-backlash/": "研究",
+  "https://www.usatoday.com/story/news/nation/2026/08/13/flock-cameras-update-after-police-abuse-scandals/91272776007/": "研究",
+};
+
+const getMarketStage = (item: (typeof intelligence)[number]): MarketStage => stageByUrl[item.url] ?? "已運作";
 
 const copy = {
   zh: {
@@ -88,9 +127,9 @@ const copy = {
       ["OPPORTUNITIES", "可轉化的外部變化", "ALPR 汰換與新 DFR 標案同時創造整合需求", "封閉資料架構與可稽核飛行紀錄可形成差異化"],
       ["THREATS", "影響市場進入的風險", "整合平台以工作流提高轉換成本", "空域、隱私與監控疑慮可能延長 DFR 導入週期"],
     ],
-    coverage: "資料涵蓋與限制", coverageItems: [["分析期間", "08/04 — 08/24"], ["最新資料檢查", "08/24 · 16:56"], ["資料狀態", "14 項可分析 · 9 項待查"]], coverageText: "本次地區補查新增 6 筆：德國 AI 影像試辦規劃、萊比錫／哈勒機場無人機事件及聯邦警察反無人機擴張；法國監獄無人機運毒案件；阿布達比自主巡邏船試驗；以及沙烏地無人機資安研究。柏林仍屬規劃中試辦，德國反無人機擴張尚未全部部署；阿布達比項目是水域公共安全試驗，沙烏地項目只是研究，兩者均不視為警察 DFR 採購。部分杜拜／阿布達比搜尋結果實為舊事件重新索引，已排除於本月訊號之外。",
-    database: "情報資料庫", dbIntro: "保存可追溯且可篩選的市場情報；本月已納入 Drone／DFR、反無人機，以及德國、法國與中東地區訊號。", stats: [["掃描項目", "40+", "IPVM＋多語公開來源"], ["事件合併", "02", "同事件多篇報導"], ["新增索引", "20", "8/04 — 8/24"], ["資料庫總數", "32", "最近 30 天"], ["待查資料", "09", "原始來源或階段待確認"], ["可用於分析", "14", "來源確認完成"]],
-    search: "搜尋標題、公司或技術…", region: "地區", technologyFilter: "技術", status: "狀態", allRegions: "全部地區", allTechnologies: "全部技術", allStatus: "全部狀態", showing: "顯示", records: "筆情報", defaultRange: "預設範圍：最近 30 天", company: "公司", open: "開啟", empty: "找不到符合條件的情報", emptyHint: "請調整關鍵字或篩選條件。", dbNoteTitle: "關於 IPVM 資料", dbNote: "網站只保存標題、日期、來源、原始連結、分類、摘要與資料狀態，不保存 IPVM 付費全文。最新 Brief 不等同底層事件發生於今日。",
+    coverage: "資料涵蓋與限制", coverageItems: [["分析期間", "08/04 — 08/24"], ["最新資料檢查", "08/24 · 16:56"], ["資料範圍", "32 筆 · 5 種市場階段"]], coverageText: "本次地區補查新增 6 筆：德國 AI 影像試辦規劃、萊比錫／哈勒機場無人機事件及聯邦警察反無人機擴張；法國監獄無人機運毒案件；阿布達比自主巡邏船試驗；以及沙烏地無人機資安研究。柏林仍屬未定案，德國反無人機擴張尚未全部部署；阿布達比項目屬導入中的水域公共安全試驗，沙烏地項目屬研究，兩者均不視為警察 DFR 採購。部分杜拜／阿布達比搜尋結果實為舊事件重新索引，已排除於本月訊號之外。",
+    database: "情報資料庫", dbIntro: "保存可追溯且可篩選的市場情報；以未定案、導入中、已運作、研究與安全事件呈現市場階段。", stats: [["掃描項目", "40+", "IPVM＋多語公開來源"], ["事件合併", "02", "同事件多篇報導"], ["新增索引", "20", "8/04 — 8/24"], ["資料庫總數", "32", "最近 30 天"], ["地區涵蓋", "05", "核心地區分類"], ["市場階段", "05", "對讀者顯示的分類"]],
+    search: "搜尋標題、公司或技術…", region: "地區", technologyFilter: "技術", stage: "市場階段", allRegions: "全部地區", allTechnologies: "全部技術", allStages: "全部階段", showing: "顯示", records: "筆情報", defaultRange: "預設範圍：最近 30 天", company: "公司", open: "開啟", empty: "找不到符合條件的情報", emptyHint: "請調整關鍵字或篩選條件。", dbNoteTitle: "分類與來源說明", dbNote: "市場階段分為未定案、導入中、已運作、研究與安全事件。內部查核狀態不對讀者顯示；網站不保存 IPVM 付費全文。最新 Brief 不等同底層事件發生於今日。",
     footer: "事實與分析判斷分開呈現 · 重大結論可追溯",
   },
   en: {
@@ -117,15 +156,16 @@ const copy = {
     evolution: "How the signal is evolving", flow: [["Public backlash becomes non-renewal", "Trust and data-sharing concerns enter local decisions"], ["Agencies choose a different architecture", "ALPR stays, but closed systems and agency control gain weight"], ["Competition expands to the platform", "Devices, evidence, permissions, retention, and audit must work together"]], assessment: "Analyst assessment", assessmentText: "Buyers are asking not only who owns video data and how it enters evidence, but also how aircraft, docks, CAD/911, RTCC, and governance operate as one DFR system. Product specifications, data governance, airspace compliance, and integration delivery therefore need to form one offer.",
     decisions: "Management decision summary", decisionHeads: ["Priority", "Recommended action", "Owner", "Timing", "Next decision"], decisionRows: [["HIGH", "Build a feature matrix for shared-network versus agency-controlled architectures", "Product × Legal", "2 weeks", "Which controls become offer baseline?"], ["HIGH", "Design an ALPR replacement package covering hardware, data, permissions, and evidence integration", "Sales × Product", "3 weeks", "Launch a dedicated migration offer?"], ["MED", "Build a DFR capability matrix covering aircraft, docks, BVLOS, CAD/911, RTCC, evidence, and governance", "Product × Strategy", "4 weeks", "What to build, integrate, or partner for?"]],
     swot: "SWOT", swotBadge: "This week", swotItems: [["STRENGTHS", "Capabilities available now", "Existing video hardware and public-safety experience", "A device-level entry point into evidence integration"], ["WEAKNESSES", "Gaps to close", "Governance, migration, and DFR operations are not yet a standard offer", "End-to-end evidence and flight-platform depth needs explicit comparison"], ["OPPORTUNITIES", "External changes to convert", "ALPR replacement and new DFR tenders create parallel integration demand", "Closed data architectures and auditable flight records can differentiate an offer"], ["THREATS", "Market-entry risks", "Integrated platforms can raise switching costs", "Airspace, privacy, and surveillance concerns may lengthen DFR adoption cycles"]],
-    coverage: "Coverage & limitations", coverageItems: [["Analysis period", "Aug 04 — Aug 24"], ["Latest data check", "Aug 24 · 16:56"], ["Data status", "14 analysis-ready · 9 pending"]], coverageText: "This regional pass adds six records: Berlin's planned AI-video pilot, the Leipzig/Halle airport drone incident and German Federal Police counter-drone expansion, the French prison drone-smuggling case, Abu Dhabi's autonomous patrol-boat trial, and Saudi-affiliated drone-security research. Berlin remains a planned pilot, and Germany's expansion is not yet fully deployed. Abu Dhabi is a maritime public-safety trial and the Saudi item is research; neither is treated as a police DFR procurement. Several Dubai and Abu Dhabi search results were older events re-indexed in August and were excluded from this month's signal count.",
-    database: "Intelligence Database", dbIntro: "Traceable, searchable market intelligence covering Drone/DFR, counter-drone, and August signals from Germany, France, and the Middle East.", stats: [["Items scanned", "40+", "IPVM + multilingual public sources"], ["Events merged", "02", "Same-event reports"], ["New indexes", "20", "Aug 04 — Aug 24"], ["Database total", "32", "Last 30 days"], ["Pending items", "09", "Source or stage pending"], ["Analysis-ready", "14", "Source confirmation complete"]],
-    search: "Search title, company, or technology…", region: "Region", technologyFilter: "Technology", status: "Status", allRegions: "All regions", allTechnologies: "All technologies", allStatus: "All statuses", showing: "Showing", records: "records", defaultRange: "Default range: last 30 days", company: "Company", open: "Open", empty: "No matching intelligence", emptyHint: "Adjust the keyword or filters.", dbNoteTitle: "About IPVM data", dbNote: "The site stores only titles, dates, sources, original links, classifications, summaries, and review status—not paid IPVM full text. A newly published brief does not mean the underlying event happened today.", footer: "Facts and analyst assessments are separated · Major conclusions are traceable",
+    coverage: "Coverage & limitations", coverageItems: [["Analysis period", "Aug 04 — Aug 24"], ["Latest data check", "Aug 24 · 16:56"], ["Data scope", "32 records · 5 market stages"]], coverageText: "This regional pass adds six records: Berlin's planned AI-video pilot, the Leipzig/Halle airport drone incident and German Federal Police counter-drone expansion, the French prison drone-smuggling case, Abu Dhabi's autonomous patrol-boat trial, and Saudi-affiliated drone-security research. Berlin remains planned, and Germany's expansion is not yet fully deployed. Abu Dhabi is an in-progress maritime public-safety trial and the Saudi item is research; neither is treated as a police DFR procurement. Several Dubai and Abu Dhabi search results were older events re-indexed in August and were excluded from this month's signal count.",
+    database: "Intelligence Database", dbIntro: "Traceable, searchable intelligence organized as Planned, In progress, Operational, Research, or Security incident.", stats: [["Items scanned", "40+", "IPVM + multilingual public sources"], ["Events merged", "02", "Same-event reports"], ["New indexes", "20", "Aug 04 — Aug 24"], ["Database total", "32", "Last 30 days"], ["Regions covered", "05", "Core region groups"], ["Market stages", "05", "Reader-facing categories"]],
+    search: "Search title, company, or technology…", region: "Region", technologyFilter: "Technology", stage: "Market stage", allRegions: "All regions", allTechnologies: "All technologies", allStages: "All stages", showing: "Showing", records: "records", defaultRange: "Default range: last 30 days", company: "Company", open: "Open", empty: "No matching intelligence", emptyHint: "Adjust the keyword or filters.", dbNoteTitle: "Classification & source note", dbNote: "Market stages are Planned, In progress, Operational, Research, and Security incident. Internal review status is not shown to readers, and the site does not store paid IPVM full text. A newly published brief does not mean the underlying event happened today.", footer: "Facts and analyst assessments are separated · Major conclusions are traceable",
   },
 } as const;
 
-function Status({ children }: { children: IntelStatus }) {
-  const tone = children.includes("VERIFIED") ? "verified" : children === "INDEXED" ? "indexed" : children === "PENDING" ? "pending" : "excluded";
-  return <span className={`status status-${tone}`}><span />{children}</span>;
+function Stage({ stage, lang }: { stage: MarketStage; lang: Lang }) {
+  const label = marketStages.find((item) => item.value === stage);
+  const tone = stage === "未定案" ? "planned" : stage === "導入中" ? "progress" : stage === "已運作" ? "operational" : stage === "研究" ? "research" : "incident";
+  return <span className={`stage stage-${tone}`}><span />{lang === "zh" ? label?.zh : label?.en}</span>;
 }
 
 export default function Home() {
@@ -135,15 +175,15 @@ export default function Home() {
   const [query, setQuery] = useState("");
   const [region, setRegion] = useState("all");
   const [technology, setTechnology] = useState("all");
-  const [status, setStatus] = useState("all");
+  const [stage, setStage] = useState("all");
   const [reportVersion, setReportVersion] = useState<ReportVersion>("live");
   const t = copy[lang];
   const navIds: View[] = ["weekly", "report", "database"];
 
   const filtered = useMemo(() => intelligence.filter((item) => {
     const haystack = `${item.title} ${item.titleEn} ${item.company} ${item.technology} ${item.technologyEn}`.toLowerCase();
-    return haystack.includes(query.toLowerCase()) && (region === "all" || item.region === region) && (technology === "all" || item.technologyEn.toLowerCase().includes(technology.toLowerCase())) && (status === "all" || item.status === status);
-  }), [query, region, technology, status]);
+    return haystack.includes(query.toLowerCase()) && (region === "all" || item.region === region) && (technology === "all" || item.technologyEn.toLowerCase().includes(technology.toLowerCase())) && (stage === "all" || getMarketStage(item) === stage);
+  }), [query, region, technology, stage]);
 
   const go = (next: View) => { setView(next); setMenuOpen(false); window.scrollTo({ top: 0, behavior: "smooth" }); };
 
@@ -160,7 +200,7 @@ export default function Home() {
     <main>
       {view === "weekly" && <WeeklyView lang={lang} onOpenReport={() => go("report")} />}
       {view === "report" && <ReportView lang={lang} version={reportVersion} setVersion={setReportVersion} />}
-      {view === "database" && <DatabaseView lang={lang} query={query} setQuery={setQuery} region={region} setRegion={setRegion} technology={technology} setTechnology={setTechnology} status={status} setStatus={setStatus} filtered={filtered} />}
+      {view === "database" && <DatabaseView lang={lang} query={query} setQuery={setQuery} region={region} setRegion={setRegion} technology={technology} setTechnology={setTechnology} stage={stage} setStage={setStage} filtered={filtered} />}
       <footer><span>VISION INTELLIGENCE · INTERNAL BRIEFING</span><span>{t.footer}</span></footer>
     </main>
   </div>;
@@ -191,13 +231,13 @@ function ReportView({ lang, version, setVersion }: { lang: Lang; version: Report
   </div>;
 }
 
-type DatabaseProps = { lang: Lang; query: string; setQuery: (value: string) => void; region: string; setRegion: (value: string) => void; technology: string; setTechnology: (value: string) => void; status: string; setStatus: (value: string) => void; filtered: typeof intelligence };
-function DatabaseView({ lang, query, setQuery, region, setRegion, technology, setTechnology, status, setStatus, filtered }: DatabaseProps) {
+type DatabaseProps = { lang: Lang; query: string; setQuery: (value: string) => void; region: string; setRegion: (value: string) => void; technology: string; setTechnology: (value: string) => void; stage: string; setStage: (value: string) => void; filtered: typeof intelligence };
+function DatabaseView({ lang, query, setQuery, region, setRegion, technology, setTechnology, stage, setStage, filtered }: DatabaseProps) {
   const t = copy[lang];
   return <div className="view database-view"><PageIntro number="30D" eyebrow="INTELLIGENCE DATABASE · 30 DAYS" title={t.database} description={t.dbIntro} dateLabel={lang === "zh" ? "資料截至 2026.08.24 · 16:56" : "DATA THROUGH 2026.08.24 · 16:56"} />
     <div className="method-stats">{t.stats.map((item) => <div key={item[0]}><small>{item[0]}</small><strong>{item[1]}</strong><span>{item[2]}</span></div>)}</div>
-    <section className="database-panel"><div className="filters"><label className="search"><span>⌕</span><input value={query} onChange={(e) => setQuery(e.target.value)} placeholder={t.search} /></label><label><span>{t.region}</span><select value={region} onChange={(e) => setRegion(e.target.value)}><option value="all">{t.allRegions}</option><option>US</option><option>Canada</option><option>Europe-DE</option><option>Europe-FR</option><option>Middle East</option><option>Global</option></select></label><label><span>{t.technologyFilter}</span><select value={technology} onChange={(e) => setTechnology(e.target.value)}><option value="all">{t.allTechnologies}</option><option value="Drone">Drone / DFR</option><option value="ALPR">ALPR / LPR</option><option value="Body-worn">BWC</option><option value="Digital evidence">Digital evidence</option><option value="Video surveillance">Video surveillance</option><option value="School security">School security</option></select></label><label><span>{t.status}</span><select value={status} onChange={(e) => setStatus(e.target.value)}><option value="all">{t.allStatus}</option><option>INDEXED</option><option>DAILY VERIFIED</option><option>WEEKLY VERIFIED</option><option>PENDING</option><option>EXCLUDED</option></select></label></div>
-      <div className="results-meta"><span>{t.showing} <strong>{filtered.length}</strong> {t.records}</span><span>{t.defaultRange}</span></div><div className="intel-list">{filtered.map((item) => { const title = lang === "zh" ? item.title : item.titleEn; return <article key={`${item.date}-${item.title}`}><div className="intel-date"><strong>{item.date}</strong><small>2026</small></div><div className="intel-content"><div className="intel-meta"><span>{item.region}</span><span>{lang === "zh" ? item.technology : item.technologyEn}</span><span className="relevance">{lang === "zh" ? item.relevance : item.relevanceEn}</span></div><h3>{title}</h3><p>{lang === "zh" ? item.source : item.sourceEn}{item.relatedUrl && <> · <a className="related-source" href={item.relatedUrl} target="_blank" rel="noreferrer">{lang === "zh" ? "Police1 相關報導 ↗" : "Police1 related report ↗"}</a></>}</p></div><div className="intel-company"><small>{t.company.toUpperCase()}</small><strong>{item.company}</strong></div><Status>{item.status}</Status><a className="row-action" href={item.url} target="_blank" rel="noreferrer" aria-label={`${t.open}: ${title}`}>↗</a></article>; })}{filtered.length === 0 && <div className="empty"><strong>{t.empty}</strong><span>{t.emptyHint}</span></div>}</div>
+    <section className="database-panel"><div className="filters"><label className="search"><span>⌕</span><input value={query} onChange={(e) => setQuery(e.target.value)} placeholder={t.search} /></label><label><span>{t.region}</span><select value={region} onChange={(e) => setRegion(e.target.value)}><option value="all">{t.allRegions}</option><option>US</option><option>Canada</option><option>Europe-DE</option><option>Europe-FR</option><option>Middle East</option><option>Global</option></select></label><label><span>{t.technologyFilter}</span><select value={technology} onChange={(e) => setTechnology(e.target.value)}><option value="all">{t.allTechnologies}</option><option value="Drone">Drone / DFR</option><option value="ALPR">ALPR / LPR</option><option value="Body-worn">BWC</option><option value="Digital evidence">Digital evidence</option><option value="Video surveillance">Video surveillance</option><option value="School security">School security</option></select></label><label><span>{t.stage}</span><select value={stage} onChange={(e) => setStage(e.target.value)}><option value="all">{t.allStages}</option>{marketStages.map((item) => <option key={item.value} value={item.value}>{lang === "zh" ? item.zh : item.en}</option>)}</select></label></div>
+      <div className="results-meta"><span>{t.showing} <strong>{filtered.length}</strong> {t.records}</span><span>{t.defaultRange}</span></div><div className="intel-list">{filtered.map((item) => { const title = lang === "zh" ? item.title : item.titleEn; const marketStage = getMarketStage(item); return <article key={`${item.date}-${item.title}`}><div className="intel-date"><strong>{item.date}</strong><small>2026</small></div><div className="intel-content"><div className="intel-meta"><span>{item.region}</span><span>{lang === "zh" ? item.technology : item.technologyEn}</span><span className="relevance">{lang === "zh" ? item.relevance : item.relevanceEn}</span></div><h3><a className="intel-title-link" href={item.url} target="_blank" rel="noreferrer">{title}</a></h3><p>{lang === "zh" ? item.source : item.sourceEn}{item.relatedUrl && <> · <a className="related-source" href={item.relatedUrl} target="_blank" rel="noreferrer">{lang === "zh" ? "Police1 相關報導 ↗" : "Police1 related report ↗"}</a></>}</p></div><div className="intel-company"><small>{t.company.toUpperCase()}</small><strong>{item.company}</strong></div><Stage stage={marketStage} lang={lang} /><a className="row-action" href={item.url} target="_blank" rel="noreferrer" aria-label={`${t.open}: ${title}`}>↗</a></article>; })}{filtered.length === 0 && <div className="empty"><strong>{t.empty}</strong><span>{t.emptyHint}</span></div>}</div>
     </section><div className="database-note"><span>i</span><p><strong>{t.dbNoteTitle}</strong>{t.dbNote}</p></div>
   </div>;
 }

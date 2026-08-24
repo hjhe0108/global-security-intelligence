@@ -56,4 +56,11 @@ test("includes verified Europe and Middle East regional records", async () => {
   assert.match(source, /法國憲兵破獲監獄無人機運毒網/);
   assert.match(source, /阿布達比完成第二次自主巡邏船實地試驗/);
   assert.match(source, /柏林規劃在 Kottbusser Tor/);
+  assert.match(source, /value: "未定案"/);
+  assert.match(source, /value: "導入中"/);
+  assert.match(source, /value: "已運作"/);
+  assert.match(source, /value: "研究"/);
+  assert.match(source, /value: "安全事件"/);
+  assert.match(source, /className="intel-title-link"/);
+  assert.doesNotMatch(source, /<Status>/);
 });
