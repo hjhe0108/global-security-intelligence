@@ -26,12 +26,12 @@ test("server-renders the security intelligence portal", async () => {
   assert.match(html, /市場分析報告/);
   assert.match(html, /情報資料庫/);
   assert.match(html, /W35/);
-  assert.match(html, /資料與分析截至 08\.24/);
-  assert.match(html, /ALPR 競爭轉向替代供應商與資料控制/);
-  assert.match(html, /反 Flock 壓力正在創造轉換商機/);
-  assert.match(html, /DFR 從試辦走向可量化的日常營運/);
+  assert.match(html, /資料與分析截至 08\.28/);
+  assert.match(html, /跨機關存取與內部濫用已開始直接終止 Flock 合約/);
+  assert.match(html, /Santa Barbara 退出 Flock，替代方案強調封閉式資料控制/);
+  assert.match(html, /Aerodome、Skydio 與 ALPR 已被 SFPD 放進同一個 RTIC 工作流/);
   assert.match(html, /機場威脅事件正在轉化為國家級反無人機能力擴張/);
-  assert.match(html, /Drone／DFR/);
+  assert.match(html, /DFR 平台化/);
   assert.match(html, /Language/);
   assert.doesNotMatch(html, /codex-preview|Building your site|Your site is taking shape/i);
 });
