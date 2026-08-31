@@ -25,13 +25,13 @@ test("server-renders the security intelligence portal", async () => {
   assert.match(html, /本週重點/);
   assert.match(html, /市場分析報告/);
   assert.match(html, /情報資料庫/);
-  assert.match(html, /W35/);
-  assert.match(html, /資料與分析截至 08\.28/);
-  assert.match(html, /跨機關存取與內部濫用已開始直接終止 Flock 合約/);
-  assert.match(html, /Santa Barbara 退出 Flock，替代方案強調封閉式資料控制/);
-  assert.match(html, /Aerodome、Skydio 與 ALPR 已被 SFPD 放進同一個 RTIC 工作流/);
-  assert.match(html, /機場威脅事件正在轉化為國家級反無人機能力擴張/);
-  assert.match(html, /DFR 平台化/);
+  assert.match(html, /W36/);
+  assert.match(html, /資料與分析截至 08\.31/);
+  assert.match(html, /Texas 將 Flock 爭議升高到州政府資金限制/);
+  assert.match(html, /Boston 停止 Flock 後仍測試 Axon 與 Motorola ALPR/);
+  assert.match(html, /Boston 以 Motorola Solutions 與 BRINC 啟動 DFR 試辦/);
+  assert.match(html, /美國與法國同步擴大 Drone 與演算法影像的制度空間/);
+  assert.match(html, /多廠商 DFR/);
   assert.match(html, /Language/);
   assert.doesNotMatch(html, /codex-preview|Building your site|Your site is taking shape/i);
 });
@@ -46,6 +46,7 @@ test("renders the requested market-report visual structure", async () => {
   assert.match(html, /INTERNAL/);
   assert.match(html, /中文/);
   assert.match(html, />EN</);
+  assert.doesNotMatch(html, /INDEXED|DAILY VERIFIED|WEEKLY VERIFIED|已複核訊號/);
 });
 
 test("includes verified Europe and Middle East regional records", async () => {
@@ -56,6 +57,9 @@ test("includes verified Europe and Middle East regional records", async () => {
   assert.match(source, /法國憲兵破獲監獄無人機運毒網/);
   assert.match(source, /阿布達比完成第二次自主巡邏船實地試驗/);
   assert.match(source, /柏林規劃在 Kottbusser Tor/);
+  assert.match(source, /Texas 州長要求州機關暫停以州資金採購 Flock 攝影機/);
+  assert.match(source, /Boston Police 啟動 Motorola Solutions 與 BRINC 的 DFR 試辦/);
+  assert.match(source, /FAA 啟動 BEYOND Phase 2/);
   assert.match(source, /value: "未定案"/);
   assert.match(source, /value: "導入中"/);
   assert.match(source, /value: "已運作"/);
