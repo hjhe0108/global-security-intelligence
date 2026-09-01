@@ -26,12 +26,11 @@ test("server-renders the security intelligence portal", async () => {
   assert.match(html, /市場分析報告/);
   assert.match(html, /情報資料庫/);
   assert.match(html, /W36/);
-  assert.match(html, /資料與分析截至 08\.31/);
-  assert.match(html, /Texas 將 Flock 爭議升高到州政府資金限制/);
-  assert.match(html, /Boston 停止 Flock 後仍測試 Axon 與 Motorola ALPR/);
-  assert.match(html, /Boston 以 Motorola Solutions 與 BRINC 啟動 DFR 試辦/);
-  assert.match(html, /美國與法國同步擴大 Drone 與演算法影像的制度空間/);
-  assert.match(html, /多廠商 DFR/);
+  assert.match(html, /資料與分析截至 09\.01/);
+  assert.match(html, /Florida 要求州級道路用地內 ALPR 在 30 天內移除/);
+  assert.match(html, /Milwaukee 保留 Flock，但把權限縮至主管並加入公開稽核/);
+  assert.match(html, /Shively 從 90 天檢查改為每週審查異常搜尋/);
+  assert.match(html, /Rekor 以三支柱提出供應商中立的責任型 ALPR 標準/);
   assert.match(html, /Language/);
   assert.doesNotMatch(html, /codex-preview|Building your site|Your site is taking shape/i);
 });
@@ -60,6 +59,10 @@ test("includes verified Europe and Middle East regional records", async () => {
   assert.match(source, /Texas 州長要求州機關暫停以州資金採購 Flock 攝影機/);
   assert.match(source, /Boston Police 啟動 Motorola Solutions 與 BRINC 的 DFR 試辦/);
   assert.match(source, /FAA 啟動 BEYOND Phase 2/);
+  assert.match(source, /Florida 撤銷州級道路用地內所有 ALPR 設備許可/);
+  assert.match(source, /Milwaukee 保留 Flock，但改為主管專用/);
+  assert.match(source, /Shively 警局承認 Flock 稽核紀錄有重大缺口/);
+  assert.match(source, /Rekor 提出供應商中立的 ALPR 責任標準/);
   assert.match(source, /value: "未定案"/);
   assert.match(source, /value: "導入中"/);
   assert.match(source, /value: "已運作"/);
