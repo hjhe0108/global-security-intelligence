@@ -26,11 +26,11 @@ test("server-renders the security intelligence portal", async () => {
   assert.match(html, /市場分析報告/);
   assert.match(html, /情報資料庫/);
   assert.match(html, /W36/);
-  assert.match(html, /資料與分析截至 09\.01/);
-  assert.match(html, /Florida 要求州級道路用地內 ALPR 在 30 天內移除/);
-  assert.match(html, /Milwaukee 保留 Flock，但把權限縮至主管並加入公開稽核/);
-  assert.match(html, /Shively 從 90 天檢查改為每週審查異常搜尋/);
-  assert.match(html, /Rekor 以三支柱提出供應商中立的責任型 ALPR 標準/);
+  assert.match(html, /資料與分析截至 09\.02/);
+  assert.match(html, /Pennsylvania 提出跨黨派 ALPR 問責架構/);
+  assert.match(html, /FCC 無人機限制提案可能涵蓋熱像、LiDAR 與機庫/);
+  assert.match(html, /Lancashire 將首度部署即時人臉辨識/);
+  assert.match(html, /Saudi Public Security 展示無人機、BWC 與行動指揮整合/);
   assert.match(html, /Language/);
   assert.doesNotMatch(html, /codex-preview|Building your site|Your site is taking shape/i);
 });
@@ -63,6 +63,11 @@ test("includes verified Europe and Middle East regional records", async () => {
   assert.match(source, /Milwaukee 保留 Flock，但改為主管專用/);
   assert.match(source, /Shively 警局承認 Flock 稽核紀錄有重大缺口/);
   assert.match(source, /Rekor 提出供應商中立的 ALPR 責任標準/);
+  assert.match(source, /Pennsylvania 參議員提出跨黨派 ALPR 問責架構/);
+  assert.match(source, /美國眾議員 Boebert 要求以聯邦資金限制/);
+  assert.match(source, /FCC 維持 9 月 2 日外國製『軍規』無人機限制提案/);
+  assert.match(source, /Lancashire Police 將於 Blackpool 活動首度部署即時人臉辨識/);
+  assert.match(source, /Saudi Public Security 在 LEAP 2026 展示智慧無人機/);
   assert.match(source, /value: "未定案"/);
   assert.match(source, /value: "導入中"/);
   assert.match(source, /value: "已運作"/);
