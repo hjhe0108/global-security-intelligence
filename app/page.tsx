@@ -7,6 +7,9 @@ type Lang = "zh" | "en";
 type IntelStatus = "INDEXED" | "DAILY VERIFIED" | "WEEKLY VERIFIED" | "PENDING" | "EXCLUDED";
 type MarketStage = "未定案" | "導入中" | "已運作" | "研究" | "安全事件";
 type ReportVersion = "live" | "last" | "w35";
+type RangeDays = 30 | 60;
+
+const intelligenceAsOf = new Date("2026-09-07T23:59:59+08:00").getTime();
 
 const intelligence: Array<{
   date: string; region: string; company: string; technology: string; technologyEn: string;
@@ -140,7 +143,7 @@ const getMarketStage = (item: (typeof intelligence)[number]): MarketStage => sta
 
 const copy = {
   zh: {
-    nav: [["本週重點", "3 MIN READ"], ["市場分析報告", "FOR DECISION MAKERS"], ["情報資料庫", "30 DAY WINDOW"]],
+    nav: [["本週重點", "3 MIN READ"], ["市場分析報告", "FOR DECISION MAKERS"], ["情報資料庫", "60 DAY WINDOW"]],
     sync: "IPVM 與公開來源同步完成", basis: "最新檢查時間 09/07 09:44", internal: "內部閱讀版 · 無需 GPT 登入", live: "即時市場情報",
     weeklyIntro: "讓每位同事快速掌握市場變化、重要性，以及可能影響的工作。", weekly: "本週重點", weekLine: "本週一句話",
     hero: "ALPR 爭議已從個別城市的合約問題升高為美國選舉政策議題；同時，Flock 正試圖用產品層級的資料隔離說明修復信任，而 Fairfax 的案例顯示 LPR 與無人機整合已進入日常執法流程。", heroNote: "分析判斷｜根據本週主要來源整理",
@@ -182,12 +185,12 @@ const copy = {
       ["THREATS", "影響市場進入的風險", "整合平台以工作流提高轉換成本", "空域、隱私與監控疑慮可能延長 DFR 導入週期"],
     ],
     coverage: "資料涵蓋與限制", coverageItems: [["分析期間", "08/08 — 09/07"], ["最新資料檢查", "09/07 · 09:44"], ["資料範圍", "58 筆 · 5 種市場階段"]], coverageText: "本次新增 3 筆：Flock Traffic Analytics 的資料架構說明、ALPR 成為美國跨黨派選舉政策議題，以及 Fairfax County 的 LPR 與無人機協同案例。Flock 的產品與成效說法屬供應商或部門自述；選舉承諾尚未等同已通過法規。",
-    database: "情報資料庫", dbIntro: "保存可追溯且可篩選的市場情報；以未定案、導入中、已運作、研究與安全事件呈現市場階段。", stats: [["資料庫總數", "58", "最近 30 天"], ["核心情報", "51", "直接影響目標市場"], ["Drone／DFR", "23", "含反無人機與治理"], ["本次新增", "03", "09.07 更新"], ["地區涵蓋", "05", "核心地區分類"], ["市場階段", "05", "一致分類"]],
-    search: "搜尋標題、公司或技術…", region: "地區", technologyFilter: "技術", stage: "市場階段", allRegions: "全部地區", allTechnologies: "全部技術", allStages: "全部階段", showing: "顯示", records: "筆情報", defaultRange: "預設範圍：最近 30 天", company: "公司", open: "開啟", empty: "找不到符合條件的情報", emptyHint: "請調整關鍵字或篩選條件。", dbNoteTitle: "分類與來源說明", dbNote: "市場階段分為未定案、導入中、已運作、研究與安全事件。每筆情報皆保留原始來源連結；網站不保存 IPVM 付費全文。",
+    database: "情報資料庫", dbIntro: "保留最多 60 天可追溯情報，預設顯示最近 30 天；可依期間、地區、技術與市場階段篩選。", stats: [["資料庫總數", "58", "目前已累積"], ["核心情報", "51", "直接影響目標市場"], ["Drone／DFR", "23", "含反無人機與治理"], ["本次新增", "03", "09.07 更新"], ["地區涵蓋", "05", "核心地區分類"], ["市場階段", "05", "一致分類"]],
+    search: "搜尋標題、公司或技術…", range: "資料期間", rangeLabels: ["最近 30 天", "最近 60 天"], region: "地區", technologyFilter: "技術", stage: "市場階段", allRegions: "全部地區", allTechnologies: "全部技術", allStages: "全部階段", showing: "顯示", of: "／", records: "筆情報", loadMore: "載入更多", allLoaded: "已顯示全部結果", company: "公司", open: "開啟", empty: "找不到符合條件的情報", emptyHint: "請調整期間、關鍵字或篩選條件。", dbNoteTitle: "分類與來源說明", dbNote: "資料庫保留最多 60 天，預設顯示最近 30 天，每次載入 20 筆。市場階段分為未定案、導入中、已運作、研究與安全事件；每筆情報皆保留原始來源連結。",
     footer: "事實與分析判斷分開呈現 · 重大結論可追溯",
   },
   en: {
-    nav: [["Weekly Highlights", "3 MIN READ"], ["Market Analysis", "FOR DECISION MAKERS"], ["Intelligence Database", "30 DAY WINDOW"]],
+    nav: [["Weekly Highlights", "3 MIN READ"], ["Market Analysis", "FOR DECISION MAKERS"], ["Intelligence Database", "60 DAY WINDOW"]],
     sync: "IPVM and public-source sync complete", basis: "Latest check Sep 07, 09:44", internal: "Internal reading · No GPT login required", live: "LIVE INTELLIGENCE",
     weeklyIntro: "A three-minute view of market shifts, why they matter, and where they may affect our work.", weekly: "Weekly Highlights", weekLine: "This week in one line",
     hero: "ALPR controversy has moved from individual city contracts into U.S. election policy. Flock is responding with product-level data-separation claims, while Fairfax shows that LPR-to-drone workflows are already part of day-to-day policing.", heroNote: "Analyst assessment · Based on this week's primary sources",
@@ -211,8 +214,8 @@ const copy = {
     decisions: "Management decision summary", decisionHeads: ["Priority", "Recommended action", "Owner", "Timing", "Next decision"], decisionRows: [["HIGH", "Build a state-level ALPR policy risk map tied to the sales pipeline", "Sales × Legal", "2 weeks", "Which bids need warrant, retention, and sharing clauses now?"], ["HIGH", "Create one lifecycle acceptance test for raw and derived data", "Product × Security", "2 weeks", "Which deletion and separation controls can produce audit evidence?"], ["MED", "Demonstrate the end-to-end LPR-to-DFR/RTCC response loop", "Product × Solutions", "3 weeks", "Which real-time interfaces and evidence fields are missing?"]],
     swot: "SWOT", swotBadge: "This week", swotItems: [["STRENGTHS", "Capabilities available now", "Existing video hardware and public-safety experience", "A device-level entry point into evidence integration"], ["WEAKNESSES", "Gaps to close", "Governance, migration, and DFR operations are not yet a standard offer", "End-to-end evidence and flight-platform depth needs explicit comparison"], ["OPPORTUNITIES", "External changes to convert", "ALPR replacement and new DFR tenders create parallel integration demand", "Closed data architectures and auditable flight records can differentiate an offer"], ["THREATS", "Market-entry risks", "Integrated platforms can raise switching costs", "Airspace, privacy, and surveillance concerns may lengthen DFR adoption cycles"]],
     coverage: "Coverage & limitations", coverageItems: [["Analysis period", "Aug 08 — Sep 07"], ["Latest data check", "Sep 07 · 09:44"], ["Data scope", "58 records · 5 market stages"]], coverageText: "This pass adds three records: Flock's Traffic Analytics data-architecture explanation, ALPR becoming a bipartisan U.S. election-policy issue, and Fairfax County's LPR-and-drone operational cases. Product and outcome claims from Flock and the police remain vendor- or agency-reported; campaign pledges are not enacted rules.",
-    database: "Intelligence Database", dbIntro: "Traceable, searchable intelligence organized as Planned, In progress, Operational, Research, or Security incident.", stats: [["Database total", "58", "Last 30 days"], ["Core intelligence", "51", "Direct market relevance"], ["Drone / DFR", "23", "Including counter-UAS and governance"], ["New this update", "03", "Updated Sep 07"], ["Regions covered", "05", "Core region groups"], ["Market stages", "05", "Consistent categories"]],
-    search: "Search title, company, or technology…", region: "Region", technologyFilter: "Technology", stage: "Market stage", allRegions: "All regions", allTechnologies: "All technologies", allStages: "All stages", showing: "Showing", records: "records", defaultRange: "Default range: last 30 days", company: "Company", open: "Open", empty: "No matching intelligence", emptyHint: "Adjust the keyword or filters.", dbNoteTitle: "Classification & source note", dbNote: "Market stages are Planned, In progress, Operational, Research, and Security incident. Each record retains its original source link; the site does not store paid IPVM full text.", footer: "Facts and analyst assessments are separated · Major conclusions are traceable",
+    database: "Intelligence Database", dbIntro: "Up to 60 days of traceable intelligence, defaulting to the latest 30 days, with period, region, technology, and market-stage filters.", stats: [["Database total", "58", "Currently accumulated"], ["Core intelligence", "51", "Direct market relevance"], ["Drone / DFR", "23", "Including counter-UAS and governance"], ["New this update", "03", "Updated Sep 07"], ["Regions covered", "05", "Core region groups"], ["Market stages", "05", "Consistent categories"]],
+    search: "Search title, company, or technology…", range: "Date range", rangeLabels: ["Last 30 days", "Last 60 days"], region: "Region", technologyFilter: "Technology", stage: "Market stage", allRegions: "All regions", allTechnologies: "All technologies", allStages: "All stages", showing: "Showing", of: "of", records: "records", loadMore: "Load more", allLoaded: "All results shown", company: "Company", open: "Open", empty: "No matching intelligence", emptyHint: "Adjust the date range, keyword, or filters.", dbNoteTitle: "Classification & source note", dbNote: "The database retains up to 60 days, defaults to the latest 30 days, and loads 20 records at a time. Market stages are Planned, In progress, Operational, Research, and Security incident; every record retains its source link.", footer: "Facts and analyst assessments are separated · Major conclusions are traceable",
   },
 } as const;
 
@@ -287,14 +290,18 @@ export default function Home() {
   const [region, setRegion] = useState("all");
   const [technology, setTechnology] = useState("all");
   const [stage, setStage] = useState("all");
+  const [rangeDays, setRangeDays] = useState<RangeDays>(30);
   const [reportVersion, setReportVersion] = useState<ReportVersion>("live");
   const t = copy[lang];
   const navIds: View[] = ["weekly", "report", "database"];
 
   const filtered = useMemo(() => intelligence.filter((item) => {
     const haystack = `${item.title} ${item.titleEn} ${item.company} ${item.technology} ${item.technologyEn}`.toLowerCase();
-    return haystack.includes(query.toLowerCase()) && (region === "all" || item.region === region) && (technology === "all" || item.technologyEn.toLowerCase().includes(technology.toLowerCase())) && (stage === "all" || getMarketStage(item) === stage);
-  }), [query, region, technology, stage]);
+    const [month, day] = item.date.split("/").map(Number);
+    const itemTime = Date.UTC(2026, month - 1, day, 15, 59, 59);
+    const ageDays = Math.floor((intelligenceAsOf - itemTime) / 86_400_000);
+    return ageDays < rangeDays && haystack.includes(query.toLowerCase()) && (region === "all" || item.region === region) && (technology === "all" || item.technologyEn.toLowerCase().includes(technology.toLowerCase())) && (stage === "all" || getMarketStage(item) === stage);
+  }), [query, region, technology, stage, rangeDays]);
 
   const go = (next: View) => { setView(next); setMenuOpen(false); window.scrollTo({ top: 0, behavior: "smooth" }); };
 
@@ -311,7 +318,7 @@ export default function Home() {
     <main>
       {view === "weekly" && <WeeklyView lang={lang} onOpenReport={() => go("report")} />}
       {view === "report" && <ReportView lang={lang} version={reportVersion} setVersion={setReportVersion} />}
-      {view === "database" && <DatabaseView lang={lang} query={query} setQuery={setQuery} region={region} setRegion={setRegion} technology={technology} setTechnology={setTechnology} stage={stage} setStage={setStage} filtered={filtered} />}
+      {view === "database" && <DatabaseView lang={lang} query={query} setQuery={setQuery} region={region} setRegion={setRegion} technology={technology} setTechnology={setTechnology} stage={stage} setStage={setStage} rangeDays={rangeDays} setRangeDays={setRangeDays} filtered={filtered} />}
       <footer><span>VISION INTELLIGENCE · INTERNAL BRIEFING</span><span>{t.footer}</span></footer>
     </main>
   </div>;
@@ -354,13 +361,18 @@ function ReportView({ lang, version, setVersion }: { lang: Lang; version: Report
   </div>;
 }
 
-type DatabaseProps = { lang: Lang; query: string; setQuery: (value: string) => void; region: string; setRegion: (value: string) => void; technology: string; setTechnology: (value: string) => void; stage: string; setStage: (value: string) => void; filtered: typeof intelligence };
-function DatabaseView({ lang, query, setQuery, region, setRegion, technology, setTechnology, stage, setStage, filtered }: DatabaseProps) {
+type DatabaseProps = { lang: Lang; query: string; setQuery: (value: string) => void; region: string; setRegion: (value: string) => void; technology: string; setTechnology: (value: string) => void; stage: string; setStage: (value: string) => void; rangeDays: RangeDays; setRangeDays: (value: RangeDays) => void; filtered: typeof intelligence };
+function DatabaseView({ lang, query, setQuery, region, setRegion, technology, setTechnology, stage, setStage, rangeDays, setRangeDays, filtered }: DatabaseProps) {
   const t = copy[lang];
-  return <div className="view database-view"><PageIntro number="30D" eyebrow="INTELLIGENCE DATABASE · 30 DAYS" title={t.database} description={t.dbIntro} dateLabel={lang === "zh" ? "資料截至 2026.09.07 · 09:44" : "DATA THROUGH 2026.09.07 · 09:44"} />
+  const [visibleCount, setVisibleCount] = useState(20);
+  const updateFilter = <T,>(setter: (value: T) => void, value: T) => { setter(value); setVisibleCount(20); };
+  const visible = filtered.slice(0, visibleCount);
+  const hasMore = visible.length < filtered.length;
+  return <div className="view database-view"><PageIntro number="60D" eyebrow="INTELLIGENCE DATABASE · 60 DAYS" title={t.database} description={t.dbIntro} dateLabel={lang === "zh" ? "資料截至 2026.09.07 · 09:44" : "DATA THROUGH 2026.09.07 · 09:44"} />
     <div className="method-stats">{t.stats.map((item) => <div key={item[0]}><small>{item[0]}</small><strong>{item[1]}</strong><span>{item[2]}</span></div>)}</div>
-    <section className="database-panel"><div className="filters"><label className="search"><span>⌕</span><input value={query} onChange={(e) => setQuery(e.target.value)} placeholder={t.search} /></label><label><span>{t.region}</span><select value={region} onChange={(e) => setRegion(e.target.value)}><option value="all">{t.allRegions}</option><option>US</option><option>Canada</option><option>Europe-DE</option><option>Europe-FR</option><option>Middle East</option><option>Global</option></select></label><label><span>{t.technologyFilter}</span><select value={technology} onChange={(e) => setTechnology(e.target.value)}><option value="all">{t.allTechnologies}</option><option value="Drone">Drone / DFR</option><option value="ALPR">ALPR / LPR</option><option value="Body-worn">BWC</option><option value="Digital evidence">Digital evidence</option><option value="Video surveillance">Video surveillance</option><option value="School security">School security</option></select></label><label><span>{t.stage}</span><select value={stage} onChange={(e) => setStage(e.target.value)}><option value="all">{t.allStages}</option>{marketStages.map((item) => <option key={item.value} value={item.value}>{lang === "zh" ? item.zh : item.en}</option>)}</select></label></div>
-      <div className="results-meta"><span>{t.showing} <strong>{filtered.length}</strong> {t.records}</span><span>{t.defaultRange}</span></div><div className="intel-list">{filtered.map((item) => { const title = lang === "zh" ? item.title : item.titleEn; const marketStage = getMarketStage(item); return <article key={`${item.date}-${item.title}`}><div className="intel-date"><strong>{item.date}</strong><small>2026</small></div><div className="intel-content"><div className="intel-meta"><span>{item.region}</span><span>{lang === "zh" ? item.technology : item.technologyEn}</span><span className="relevance">{lang === "zh" ? item.relevance : item.relevanceEn}</span></div><h3><a className="intel-title-link" href={item.url} target="_blank" rel="noreferrer">{title}</a></h3><p>{lang === "zh" ? item.source : item.sourceEn}{item.relatedUrl && <> · <a className="related-source" href={item.relatedUrl} target="_blank" rel="noreferrer">{lang === "zh" ? "Police1 相關報導 ↗" : "Police1 related report ↗"}</a></>}</p></div><div className="intel-company"><small>{t.company.toUpperCase()}</small><strong>{item.company}</strong></div><Stage stage={marketStage} lang={lang} /><a className="row-action" href={item.url} target="_blank" rel="noreferrer" aria-label={`${t.open}: ${title}`}>↗</a></article>; })}{filtered.length === 0 && <div className="empty"><strong>{t.empty}</strong><span>{t.emptyHint}</span></div>}</div>
+    <section className="database-panel"><div className="filters"><label className="search"><span>⌕</span><input value={query} onChange={(e) => updateFilter(setQuery, e.target.value)} placeholder={t.search} /></label><label><span>{t.range}</span><select value={rangeDays} onChange={(e) => updateFilter(setRangeDays, Number(e.target.value) as RangeDays)}><option value={30}>{t.rangeLabels[0]}</option><option value={60}>{t.rangeLabels[1]}</option></select></label><label><span>{t.region}</span><select value={region} onChange={(e) => updateFilter(setRegion, e.target.value)}><option value="all">{t.allRegions}</option><option>US</option><option>Canada</option><option>Europe-DE</option><option>Europe-FR</option><option>Middle East</option><option>Global</option></select></label><label><span>{t.technologyFilter}</span><select value={technology} onChange={(e) => updateFilter(setTechnology, e.target.value)}><option value="all">{t.allTechnologies}</option><option value="Drone">Drone / DFR</option><option value="ALPR">ALPR / LPR</option><option value="Body-worn">BWC</option><option value="Digital evidence">Digital evidence</option><option value="Video surveillance">Video surveillance</option><option value="School security">School security</option></select></label><label><span>{t.stage}</span><select value={stage} onChange={(e) => updateFilter(setStage, e.target.value)}><option value="all">{t.allStages}</option>{marketStages.map((item) => <option key={item.value} value={item.value}>{lang === "zh" ? item.zh : item.en}</option>)}</select></label></div>
+      <div className="results-meta"><span>{t.showing} <strong>{visible.length}</strong> {t.of} <strong>{filtered.length}</strong> {t.records}</span><span>{t.rangeLabels[rangeDays === 30 ? 0 : 1]}</span></div><div className="intel-list">{visible.map((item) => { const title = lang === "zh" ? item.title : item.titleEn; const marketStage = getMarketStage(item); return <article key={`${item.date}-${item.title}`}><div className="intel-date"><strong>{item.date}</strong><small>2026</small></div><div className="intel-content"><div className="intel-meta"><span>{item.region}</span><span>{lang === "zh" ? item.technology : item.technologyEn}</span><span className="relevance">{lang === "zh" ? item.relevance : item.relevanceEn}</span></div><h3><a className="intel-title-link" href={item.url} target="_blank" rel="noreferrer">{title}</a></h3><p>{lang === "zh" ? item.source : item.sourceEn}{item.relatedUrl && <> · <a className="related-source" href={item.relatedUrl} target="_blank" rel="noreferrer">{lang === "zh" ? "Police1 相關報導 ↗" : "Police1 related report ↗"}</a></>}</p></div><div className="intel-company"><small>{t.company.toUpperCase()}</small><strong>{item.company}</strong></div><Stage stage={marketStage} lang={lang} /><a className="row-action" href={item.url} target="_blank" rel="noreferrer" aria-label={`${t.open}: ${title}`}>↗</a></article>; })}{filtered.length === 0 && <div className="empty"><strong>{t.empty}</strong><span>{t.emptyHint}</span></div>}</div>
+      {filtered.length > 0 && <div className="load-more-wrap">{hasMore ? <button className="load-more" onClick={() => setVisibleCount((count) => count + 20)}>{t.loadMore}<span>{visible.length} / {filtered.length}</span></button> : <span className="all-loaded">{t.allLoaded} · {filtered.length}</span>}</div>}
     </section><div className="database-note"><span>i</span><p><strong>{t.dbNoteTitle}</strong>{t.dbNote}</p></div>
   </div>;
 }

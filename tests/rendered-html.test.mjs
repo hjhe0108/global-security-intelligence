@@ -100,3 +100,17 @@ test("report version selector loads distinct archived analysis", async () => {
   assert.match(source, /aria-controls="report-content"/);
   assert.doesNotMatch(source, /value="w31"/);
 });
+
+test("intelligence database supports 30/60-day range and incremental loading", async () => {
+  const source = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
+  assert.match(source, /type RangeDays = 30 \| 60/);
+  assert.match(source, /useState<RangeDays>\(30\)/);
+  assert.match(source, /rangeDays=\{rangeDays\}/);
+  assert.match(source, /<option value=\{30\}>/);
+  assert.match(source, /<option value=\{60\}>/);
+  assert.match(source, /filtered\.slice\(0, visibleCount\)/);
+  assert.match(source, /setVisibleCount\(\(count\) => count \+ 20\)/);
+  assert.match(source, /60 DAY WINDOW/);
+  assert.match(source, /載入更多/);
+  assert.match(source, /Load more/);
+});
