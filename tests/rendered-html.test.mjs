@@ -114,3 +114,12 @@ test("intelligence database supports 30/60-day range and incremental loading", a
   assert.match(source, /載入更多/);
   assert.match(source, /Load more/);
 });
+
+test("uses explicit cross-region and other-Europe labels", async () => {
+  const source = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
+  assert.match(source, /value: "Europe-Other", zh: "歐洲／其他地區"/);
+  assert.match(source, /value: "Global", zh: "跨區／全球性"/);
+  assert.match(source, /region: "Europe-Other"[\s\S]*Cleveland Police/);
+  assert.match(source, /getRegionLabel\(item\.region, lang\)/);
+  assert.doesNotMatch(source, /region: "Global"[\s\S]{0,180}Cleveland Police/);
+});
