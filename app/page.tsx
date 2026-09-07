@@ -6,7 +6,7 @@ type View = "weekly" | "report" | "database";
 type Lang = "zh" | "en";
 type IntelStatus = "INDEXED" | "DAILY VERIFIED" | "WEEKLY VERIFIED" | "PENDING" | "EXCLUDED";
 type MarketStage = "未定案" | "導入中" | "已運作" | "研究" | "安全事件";
-type ReportVersion = "live" | "last" | "w31";
+type ReportVersion = "live" | "last" | "w35";
 
 const intelligence: Array<{
   date: string; region: string; company: string; technology: string; technologyEn: string;
@@ -161,7 +161,7 @@ const copy = {
     goDeeper: "需要完整決策脈絡？", goText: "查看市場訊號演變、SWOT、管理者決策摘要與資料限制。", readReport: "閱讀市場分析",
     dataNote: "更新自 IPVM Briefs 與公開原始來源；網站只保存必要欄位、摘要與連結，不保存或重製 IPVM 付費全文。",
     report: "市場分析報告", reportIntro: "將市場訊號轉化為管理判斷、決策摘要與具體下一步。", reportVersion: "報告版本",
-    versions: ["本週持續更新版", "上週正式封存版", "2026 W31 正式封存版"], liveState: "持續更新", archiveState: "正式封存", liveUse: "納入本週最新情報", archiveUse: "使用封存資料",
+    versions: ["W37 · 本週持續更新版", "W36 · 正式封存版", "W35 · 正式封存版"], liveState: "持續更新", archiveState: "正式封存", liveUse: "納入本週最新情報", archiveUse: "已切換至該週封存內容",
     conclusions: "本期分析結論", conclusionItems: [
       ["ALPR 已由地方治理議題升高為選舉與預算風險。", "AP 的跨州整理顯示，禁用、停撥補助、搜索令與保存限制正被不同黨派候選人採用；即使尚未立法，也足以延後標案與改變採購條件。"],
       ["資料治理競爭正移向衍生資料與產品邊界。", "Flock 強調 Traffic Analytics 不保存個別車牌紀錄，但彙總統計可保存五年；未來驗收將不只看原始影像保存期，也會追問衍生資料如何隔離、授權與刪除。"],
@@ -205,7 +205,7 @@ const copy = {
     ],
     marketNumbers: "Key market numbers", numberNote: "Only figures with traceable sources and clear market relevance are shown.", numbers: [["$32.69M", "Riverside County's Axon Body 4, storage, and services contract"], ["2,086 units", "Body-worn cameras covered by the Riverside County agreement"], ["$6.915M", "Ventura County's eight-year Axon DFR equipment contract"], ["70 units", "Genetec Cloudrunner cameras connected to Pueblo's RTCC"]],
     goDeeper: "Need the full decision context?", goText: "Review signal evolution, SWOT, management decisions, and data limitations.", readReport: "Read market analysis", dataNote: "Updated from IPVM Briefs and public primary sources. The site stores only necessary metadata, summaries, and links—not paid IPVM full text.",
-    report: "Market Analysis", reportIntro: "Turning market signals into management judgments, decision summaries, and clear next steps.", reportVersion: "Report version", versions: ["Current week · Live", "Last week · Archived", "2026 W31 · Archived"], liveState: "Live update", archiveState: "Official archive", liveUse: "Includes this week's latest intelligence", archiveUse: "Uses archived intelligence",
+    report: "Market Analysis", reportIntro: "Turning market signals into management judgments, decision summaries, and clear next steps.", reportVersion: "Report version", versions: ["W37 · Current week", "W36 · Archived", "W35 · Archived"], liveState: "Live update", archiveState: "Official archive", liveUse: "Includes this week's latest intelligence", archiveUse: "Showing that week's archived analysis",
     conclusions: "Key conclusions", conclusionItems: [["ALPR has moved from local governance into election and budget risk.", "AP's cross-state reporting shows candidates in both parties adopting bans, funding pauses, warrants, and retention limits. Even before enactment, these positions can delay tenders and change procurement terms."], ["Data-governance competition is moving into derived data and product boundaries.", "Flock says Traffic Analytics excludes individual plate records while keeping aggregates for five years. Acceptance reviews will increasingly test how derived data is separated, authorized, and deleted."], ["LPR and drone value comes from a cross-system operational loop.", "Fairfax's cases connect real-time LPR alerts, aerial confirmation, and ground interception. DFR and RTCC differentiation now rests on response time, operating permissions, and evidence continuity."], ["Platform buying and verifiable governance must succeed together.", "Ventura shows buyers will pay for integration, but nationwide policy backlash means platform scale becomes a liability when governance promises cannot be proven as auditable controls."]],
     evolution: "How the signal is evolving", flow: [["Local contract disputes enter state and federal elections", "Campaign proposals can become funding limits, warrant thresholds, and retention caps"], ["Governance expands from raw records to derived data", "Product boundaries, aggregation, retention, and cross-system access all need evidence"], ["Point sensors become incident-response loops", "LPR alerts, drone confirmation, dispatch, and evidence ingestion jointly determine value"]], assessment: "Analyst assessment", assessmentText: "In the near term, the largest ALPR risk is not recognition accuracy but policy uncertainty and a trust discount. The largest DFR opportunity is converting sensor alerts into faster, safer, auditable action. Vendors that can prove both the data lifecycle and the cross-system workflow are best positioned to remain eligible as rules tighten.",
     decisions: "Management decision summary", decisionHeads: ["Priority", "Recommended action", "Owner", "Timing", "Next decision"], decisionRows: [["HIGH", "Build a state-level ALPR policy risk map tied to the sales pipeline", "Sales × Legal", "2 weeks", "Which bids need warrant, retention, and sharing clauses now?"], ["HIGH", "Create one lifecycle acceptance test for raw and derived data", "Product × Security", "2 weeks", "Which deletion and separation controls can produce audit evidence?"], ["MED", "Demonstrate the end-to-end LPR-to-DFR/RTCC response loop", "Product × Solutions", "3 weeks", "Which real-time interfaces and evidence fields are missing?"]],
@@ -213,6 +213,63 @@ const copy = {
     coverage: "Coverage & limitations", coverageItems: [["Analysis period", "Aug 08 — Sep 07"], ["Latest data check", "Sep 07 · 09:44"], ["Data scope", "58 records · 5 market stages"]], coverageText: "This pass adds three records: Flock's Traffic Analytics data-architecture explanation, ALPR becoming a bipartisan U.S. election-policy issue, and Fairfax County's LPR-and-drone operational cases. Product and outcome claims from Flock and the police remain vendor- or agency-reported; campaign pledges are not enacted rules.",
     database: "Intelligence Database", dbIntro: "Traceable, searchable intelligence organized as Planned, In progress, Operational, Research, or Security incident.", stats: [["Database total", "58", "Last 30 days"], ["Core intelligence", "51", "Direct market relevance"], ["Drone / DFR", "23", "Including counter-UAS and governance"], ["New this update", "03", "Updated Sep 07"], ["Regions covered", "05", "Core region groups"], ["Market stages", "05", "Consistent categories"]],
     search: "Search title, company, or technology…", region: "Region", technologyFilter: "Technology", stage: "Market stage", allRegions: "All regions", allTechnologies: "All technologies", allStages: "All stages", showing: "Showing", records: "records", defaultRange: "Default range: last 30 days", company: "Company", open: "Open", empty: "No matching intelligence", emptyHint: "Adjust the keyword or filters.", dbNoteTitle: "Classification & source note", dbNote: "Market stages are Planned, In progress, Operational, Research, and Security incident. Each record retains its original source link; the site does not store paid IPVM full text.", footer: "Facts and analyst assessments are separated · Major conclusions are traceable",
+  },
+} as const;
+
+const archivedReports = {
+  zh: {
+    last: {
+      week: "W36",
+      dateLabel: "2026.09.03 · 正式封存",
+      conclusionItems: [
+        ["平台黏著正在主導大型 BWC 續約。", "Riverside County 以 Axon Evidence 的既有相容性與工作流延續性支持 2,086 部 Body 4 長約；競爭對手若只比較相機規格，很難突破既有平台。"],
+        ["DFR 採購開始完整計入人力、治理與多年維運。", "Ventura 的 10 架 DFR 不只包含 691.5 萬美元設備合約，還新增兩名飛手與公開飛行資料；政策仍待定稿，是部署時程的實質風險。"],
+        ["ALPR 問責缺口已從輿論風險轉為停機風險。", "Palm Bay 明確把系統恢復與州級保存、分享、稽核、用途及責任規則綁定；可驗證的治理控制會直接影響是否能持續營運。"],
+        ["RTCC 整合與反無人機威脅同時拉高跨系統需求。", "Pueblo 將 ALPR、影像、槍聲偵測與無人機集中到同一作業平台；德國事件則要求偵測、識別、處置與證據鏈能應對更高風險場景。"],
+      ],
+      flow: [["單點設備採購轉向多年平台合約", "BWC 與 DFR 的儲存、派遣、人力和證據工作流被一起定價"], ["治理由附錄變成營運開關", "ALPR 保存、分享、稽核與問責不明時，買方會直接暫停系統"], ["跨感測器作業成為差異化核心", "RTCC 整合與反無人機威脅都要求即時關聯、處置與可追溯證據"]],
+      assessmentText: "市場正在同時獎勵『平台完整度』與『治理可驗證性』。Axon 以證據工作流和長期服務鎖定 BWC、DFR；Genetec 以開放整合切入 RTCC；但 Flock 暫停與德國無人機事件提醒，若權限、資料治理或威脅處置無法被驗證，再好的硬體也可能被停用或排除。",
+      decisionRows: [["HIGH", "建立 BWC／DFR／RTCC 的 5 年總持有成本與轉換成本模型", "產品 × 業務", "2 週", "哪些工作流能降低既有平台黏著"], ["HIGH", "把 ALPR 權限、分享、保存、稽核與異常鎖定做成驗收清單", "產品 × 法務", "2 週", "哪些治理控制必須預設啟用"], ["MED", "整合無人機偵測、識別、處置與證據鏈的方案圖", "產品 × 供應鏈", "3 週", "現有產品在哪些 C-UAS 環節需要夥伴"]],
+      coverageItems: [["分析期間", "08/04 — 09/03"], ["最新資料檢查", "09/03 · 09:36"], ["資料範圍", "55 筆 · 5 種市場階段"]],
+      coverageText: "本期新增 Palm Bay 的 Flock 暫停、Ventura 的 Axon DFR 合約、Riverside 的 Axon Body 4 合約及 Pueblo 的 Genetec RTCC 案例，並更新萊比錫機場爆裂物無人機事件的德國政府歸因。Ventura 飛行政策仍在最終審查；Riverside 金額含儲存、服務與備援，不可視為單機價格。",
+    },
+    w35: {
+      week: "W35",
+      dateLabel: "2026.08.28 · 正式封存",
+      conclusionItems: [
+        ["反 Flock 不等於反 ALPR，而是供應商重新洗牌。", "NPR 與 Santa Barbara 案例顯示，部分機關選擇保留 ALPR 能力、改換供應商或資料架構；這是近期案例方向，不代表全市場已普遍轉換。"],
+        ["資料架構已成為競爭條件。", "Santa Barbara 的替代方案將市府持有、警局控制、無公共或跨機關搜尋列為核心；Verkada 合約當時仍待審議。"],
+        ["DFR 開始出現可比較的營運數據，但尚不足以直接推論 ROI。", "Cleveland 與 Dallas 公布規模化運作數字；單一機關研究提供初步實證，但不能外推為所有警局的因果成效。"],
+        ["歐洲近期 Drone 訊號更偏向反無人機與關鍵基礎設施。", "德國機場事件與聯邦警察擴張規劃形成威脅到能力投資的訊號鏈；法國監獄案件顯示低成本無人機已成為高頻安全風險。"],
+      ],
+      flow: [["公眾反彈轉成不續約", "Flock 信任與資料分享爭議進入地方決策"], ["客戶改選資料架構", "保留 ALPR，但要求封閉系統與機關控制"], ["競爭升級為平台能力", "設備、證據、權限、保存與稽核必須一起回答"]],
+      assessmentText: "買方除了追問影像資料屬於誰、如何分享與進入證據流程，也開始把無人機、機庫、CAD／911、RTCC 與治理視為同一套 DFR 作業系統。對 BU 而言，產品規格、資料治理、空域合規與整合交付需要形成同一套方案。",
+      decisionRows: [["HIGH", "建立共享網路與機關封閉式架構的功能差異矩陣", "產品 × 法務", "2 週", "哪些治理能力納入方案基線"], ["HIGH", "設計 ALPR 汰換與遷移包：設備、資料、權限及證據介接", "業務 × 產品", "3 週", "是否形成獨立轉換方案"], ["MED", "建立 DFR 能力矩陣：飛行器、機庫、BVLOS、CAD／911、RTCC、證據與治理", "產品 × 策略", "4 週", "哪些能力自建、整合或合作"]],
+      coverageItems: [["分析期間", "08/04 — 08/28"], ["最新資料檢查", "08/28 · 09:45"], ["資料範圍", "37 筆 · 5 種市場階段"]],
+      coverageText: "本期納入 SFPD 的 Aerodome／Skydio／ALPR／RTIC 整合作業、Chattanooga 的 BRINC DFR 正式運作、Pflugerville 與 Stow 的 Flock 治理事件，以及瑞典 Kristianstad 的限時無人機監控。部門自報數字與限時活動監控均未被外推為整體市場成效。",
+    },
+  },
+  en: {
+    last: {
+      week: "W36",
+      dateLabel: "2026.09.03 · OFFICIAL ARCHIVE",
+      conclusionItems: [["Platform lock-in is shaping major BWC renewals.", "Riverside County cited Axon Evidence compatibility and workflow continuity for its 2,086-unit Body 4 contract; camera specifications alone are unlikely to displace the incumbent platform."], ["DFR procurement now accounts for staffing, governance, and multiyear operations.", "Ventura's 10-drone deployment combines a $6.915M equipment agreement with two dedicated pilots and public flight data. Its policy was still under final review."], ["ALPR accountability gaps have become an operational shutdown risk.", "Palm Bay tied reactivation to statewide rules for retention, sharing, audits, authorized uses, and accountability."], ["RTCC integration and counter-UAS threats are raising cross-system requirements.", "Pueblo brings ALPR, video, gunshot detection, and drones into one platform, while the German incident requires detection, identification, response, and evidence continuity."]],
+      flow: [["Point-device purchases become multiyear platform contracts", "Storage, dispatch, staffing, and evidence workflows are priced together"], ["Governance moves from appendix to operational switch", "Unclear ALPR retention, sharing, audits, and accountability can stop operations"], ["Cross-sensor operations become the differentiator", "RTCC integration and counter-UAS response require traceable evidence"]],
+      assessmentText: "The market is rewarding both platform completeness and verifiable governance. Axon anchors BWC and DFR through evidence workflows; Genetec enters RTCC through open integration. Flock suspensions and Germany's drone incident show that hardware can still be sidelined when controls cannot be proven.",
+      decisionRows: [["HIGH", "Build five-year TCO and switching-cost models for BWC, DFR, and RTCC", "Product × Sales", "2 weeks", "Which workflows can reduce incumbent lock-in?"], ["HIGH", "Turn ALPR access, sharing, retention, audits, and anomaly lockout into an acceptance checklist", "Product × Legal", "2 weeks", "Which controls must be enabled by default?"], ["MED", "Map an integrated drone detection, identification, response, and evidence chain", "Product × Supply chain", "3 weeks", "Which counter-UAS layers require partners?"]],
+      coverageItems: [["Analysis period", "Aug 04 — Sep 03"], ["Latest data check", "Sep 03 · 09:36"], ["Data scope", "55 records · 5 market stages"]],
+      coverageText: "This edition added Palm Bay's Flock suspension, Ventura's Axon DFR contract, Riverside's Axon Body 4 agreement, and Pueblo's Genetec RTCC case, and updated Germany's attribution of the Leipzig drone incident. Ventura's policy was still under review; Riverside's total includes storage, services, and spares.",
+    },
+    w35: {
+      week: "W35",
+      dateLabel: "2026.08.28 · OFFICIAL ARCHIVE",
+      conclusionItems: [["Anti-Flock does not equal anti-ALPR; it is reshuffling vendors.", "NPR and Santa Barbara showed agencies retaining ALPR while changing vendors or data architecture. These cases did not establish a market-wide switch."], ["Data architecture is becoming a competitive criterion.", "Santa Barbara's proposed alternative emphasized city ownership, department control, and no public or cross-agency search."], ["DFR is producing comparable operating data, but not yet a generalizable ROI case.", "Cleveland and Dallas reported scaled operating figures while a single-agency study provided early evidence; none established market-wide causality."], ["Europe's near-term drone signal is more counter-drone and critical-infrastructure oriented.", "Germany's airport incident and Federal Police plan connected threats to capability investment, while the French prison case showed a frequent low-cost drone risk."]],
+      flow: [["Public backlash becomes non-renewal", "Trust and data-sharing concerns enter local decisions"], ["Agencies choose a different architecture", "ALPR stays, but closed systems and agency control gain weight"], ["Competition expands to the platform", "Devices, evidence, permissions, retention, and audit must work together"]],
+      assessmentText: "Buyers are asking who owns video data and how it enters evidence, while also treating aircraft, docks, CAD/911, RTCC, and governance as one DFR operating system. Product specifications, data governance, airspace compliance, and integration delivery need to form one offer.",
+      decisionRows: [["HIGH", "Build a feature matrix for shared-network versus agency-controlled architectures", "Product × Legal", "2 weeks", "Which controls become the offer baseline?"], ["HIGH", "Design an ALPR replacement package covering hardware, data, permissions, and evidence integration", "Sales × Product", "3 weeks", "Launch a dedicated migration offer?"], ["MED", "Build a DFR capability matrix covering aircraft, docks, BVLOS, CAD/911, RTCC, evidence, and governance", "Product × Strategy", "4 weeks", "What should be built, integrated, or partnered?"]],
+      coverageItems: [["Analysis period", "Aug 04 — Aug 28"], ["Latest data check", "Aug 28 · 09:45"], ["Data scope", "37 records · 5 market stages"]],
+      coverageText: "This edition included SFPD's Aerodome/Skydio/ALPR/RTIC workflow, Chattanooga's operational BRINC DFR program, Flock governance incidents in Pflugerville and Stow, and time-limited Swedish Police drone surveillance. Agency-reported figures and event surveillance were not generalized into market-wide outcomes.",
+    },
   },
 } as const;
 
@@ -274,14 +331,26 @@ function WeeklyView({ lang, onOpenReport }: { lang: Lang; onOpenReport: () => vo
 
 function ReportView({ lang, version, setVersion }: { lang: Lang; version: ReportVersion; setVersion: (value: ReportVersion) => void }) {
   const t = copy[lang]; const live = version === "live"; const versionIndex = version === "live" ? 0 : version === "last" ? 1 : 2;
-  const reportWeek = version === "live" ? "W37" : version === "last" ? "W36" : "W31";
-  return <div className="view report-view"><PageIntro number={reportWeek} eyebrow="MARKET ANALYSIS · DECISION VIEW" title={t.report} description={t.reportIntro} dateLabel={live ? (lang === "zh" ? "2026.09.07 · 資料與分析截至 09.07" : "2026.09.07 · DATA & ANALYSIS THROUGH 09.07") : lang === "zh" ? "正式封存" : "OFFICIAL ARCHIVE"} />
-    <div className="report-toolbar"><div><span className="eyebrow">{t.reportVersion}</span><select value={version} onChange={(e) => setVersion(e.target.value as ReportVersion)} aria-label={t.reportVersion}><option value="live">{t.versions[0]}</option><option value="last">{t.versions[1]}</option><option value="w31">{t.versions[2]}</option></select></div><div className="report-state"><span className="pulse" /><div><strong>{live ? t.liveState : t.archiveState}</strong><small>{live ? t.liveUse : t.archiveUse}</small></div></div></div>
-    <section className="conclusion"><span className="eyebrow">EXECUTIVE CONCLUSION</span><h2>{t.conclusions}</h2><div className="conclusion-list">{t.conclusionItems.map((item, i) => <div key={item[0]}><span>0{i + 1}</span><p><strong>{item[0]}</strong> {item[1]}</p></div>)}</div></section>
-    <section className="signal-evolution"><div className="section-heading"><div><span className="eyebrow">SIGNAL EVOLUTION</span><h2>{t.evolution}</h2></div></div><div className="flow">{t.flow.map((item, i) => <div className={i === 2 ? "flow-accent" : ""} key={item[0]}><small>{i === 2 ? "IMPLICATION" : `SIGNAL 0${i + 1}`}</small><strong>{item[0]}</strong><span>{item[1]}</span></div>).flatMap((node, i) => i < 2 ? [node, <b key={`arrow-${i}`}>→</b>] : [node])}</div><p className="assessment"><span>{t.assessment}</span>{t.assessmentText}</p></section>
-    <section><div className="section-heading"><div><span className="eyebrow">DECISION SUMMARY</span><h2>{t.decisions}</h2></div></div><div className="decision-table" role="table"><div className="table-head" role="row">{t.decisionHeads.map((head) => <span key={head}>{head}</span>)}</div>{t.decisionRows.map((row) => <div role="row" key={row[1]}><span><b className={`priority ${row[0] === "HIGH" ? "high" : "medium"}`}>{row[0]}</b></span>{row.slice(1).map((cell) => <span key={cell}>{cell}</span>)}</div>)}</div></section>
+  const archivedVersion = version === "last" ? "last" : "w35";
+  const reportData = live ? {
+    week: "W37",
+    dateLabel: lang === "zh" ? "2026.09.07 · 資料與分析截至 09.07" : "2026.09.07 · DATA & ANALYSIS THROUGH 09.07",
+    conclusionItems: t.conclusionItems,
+    flow: t.flow,
+    assessmentText: t.assessmentText,
+    decisionRows: t.decisionRows,
+    coverageItems: t.coverageItems,
+    coverageText: t.coverageText,
+  } : archivedReports[lang][archivedVersion];
+  return <div className="view report-view" data-version={version}><PageIntro number={reportData.week} eyebrow="MARKET ANALYSIS · DECISION VIEW" title={t.report} description={t.reportIntro} dateLabel={reportData.dateLabel} />
+    <div className="report-toolbar"><div><span className="eyebrow">{t.reportVersion}</span><select value={version} onChange={(e) => setVersion(e.target.value as ReportVersion)} aria-label={t.reportVersion} aria-controls="report-content"><option value="live">{t.versions[0]}</option><option value="last">{t.versions[1]}</option><option value="w35">{t.versions[2]}</option></select></div><div className="report-state" aria-live="polite"><span className="pulse" /><div><strong>{live ? t.liveState : t.archiveState}</strong><small>{live ? t.liveUse : t.archiveUse} · {reportData.week}</small></div></div></div>
+    <div id="report-content" key={version} className="report-content" aria-live="polite">
+    <section className="conclusion"><span className="eyebrow">EXECUTIVE CONCLUSION</span><h2>{t.conclusions}</h2><div className="conclusion-list">{reportData.conclusionItems.map((item, i) => <div key={item[0]}><span>0{i + 1}</span><p><strong>{item[0]}</strong> {item[1]}</p></div>)}</div></section>
+    <section className="signal-evolution"><div className="section-heading"><div><span className="eyebrow">SIGNAL EVOLUTION</span><h2>{t.evolution}</h2></div></div><div className="flow">{reportData.flow.map((item, i) => <div className={i === 2 ? "flow-accent" : ""} key={item[0]}><small>{i === 2 ? "IMPLICATION" : `SIGNAL 0${i + 1}`}</small><strong>{item[0]}</strong><span>{item[1]}</span></div>).flatMap((node, i) => i < 2 ? [node, <b key={`arrow-${i}`}>→</b>] : [node])}</div><p className="assessment"><span>{t.assessment}</span>{reportData.assessmentText}</p></section>
+    <section><div className="section-heading"><div><span className="eyebrow">DECISION SUMMARY</span><h2>{t.decisions}</h2></div></div><div className="decision-table" role="table"><div className="table-head" role="row">{t.decisionHeads.map((head) => <span key={head}>{head}</span>)}</div>{reportData.decisionRows.map((row) => <div role="row" key={row[1]}><span><b className={`priority ${row[0] === "HIGH" ? "high" : "medium"}`}>{row[0]}</b></span>{row.slice(1).map((cell) => <span key={cell}>{cell}</span>)}</div>)}</div></section>
     <section className="swot-section"><div className="section-heading"><div><span className="eyebrow">STRATEGIC VIEW</span><h2>{t.swot}</h2></div><span className="sample-label">{t.swotBadge}</span></div><div className="swot-grid">{t.swotItems.map((item, i) => <div className={`swot ${["strength", "weakness", "opportunity", "threat"][i]}`} key={item[0]}><span>{["S", "W", "O", "T"][i]}</span><div><small>{item[0]}</small><h3>{item[1]}</h3><ul><li>{item[2]}</li><li>{item[3]}</li></ul></div></div>)}</div></section>
-    <section className="coverage"><div><span className="eyebrow">COVERAGE & LIMITATIONS</span><h2>{t.coverage}</h2></div><div className="coverage-grid">{t.coverageItems.map((item) => <div key={item[0]}><small>{item[0]}</small><strong>{item[1]}</strong></div>)}<div><small>{t.reportVersion}</small><strong>{t.versions[versionIndex]}</strong></div></div><p>{t.coverageText}</p></section>
+    <section className="coverage"><div><span className="eyebrow">COVERAGE & LIMITATIONS</span><h2>{t.coverage}</h2></div><div className="coverage-grid">{reportData.coverageItems.map((item) => <div key={item[0]}><small>{item[0]}</small><strong>{item[1]}</strong></div>)}<div><small>{t.reportVersion}</small><strong>{t.versions[versionIndex]}</strong></div></div><p>{reportData.coverageText}</p></section>
+    </div>
   </div>;
 }
 

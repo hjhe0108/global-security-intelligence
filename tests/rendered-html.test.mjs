@@ -88,3 +88,15 @@ test("includes verified Europe and Middle East regional records", async () => {
   assert.match(source, /className="intel-title-link"/);
   assert.doesNotMatch(source, /<Status>/);
 });
+
+test("report version selector loads distinct archived analysis", async () => {
+  const source = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
+  assert.match(source, /value="last"/);
+  assert.match(source, /value="w35"/);
+  assert.match(source, /平台黏著正在主導大型 BWC 續約/);
+  assert.match(source, /反 Flock 不等於反 ALPR/);
+  assert.match(source, /Platform lock-in is shaping major BWC renewals/);
+  assert.match(source, /Anti-Flock does not equal anti-ALPR/);
+  assert.match(source, /aria-controls="report-content"/);
+  assert.doesNotMatch(source, /value="w31"/);
+});
