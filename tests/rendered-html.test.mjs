@@ -58,7 +58,8 @@ test("market numbers adapt to value length and responsive widths", async () => {
   assert.match(html, /class="market-metric metric-wide"/);
   assert.match(css, /\.market-metric\.metric-compact\s*\{\s*flex:/);
   assert.match(css, /\.market-metric\.metric-wide\s*\{\s*flex:/);
-  assert.match(css, /"Segoe UI Variable Display"/);
+  assert.match(css, /\.site-shell\.lang-zh[\s\S]*"Microsoft JhengHei"/);
+  assert.match(css, /\.site-shell\.lang-en[\s\S]*font-family:Calibri/);
   assert.match(css, /font-variant-numeric:lining-nums tabular-nums/);
   assert.match(css, /@media \(max-width:1180px\)[\s\S]*\.number-grid \{ display:grid; grid-template-columns:repeat\(2,minmax\(0,1fr\)\); \}/);
 });
@@ -96,7 +97,7 @@ test("includes verified Europe and Middle East regional records", async () => {
   assert.match(source, /Dubai Police 展示採樣與噴灑無人機/);
   assert.match(source, /\["資料庫總數", "61"/);
   assert.match(source, /\["核心情報", "53"/);
-  assert.match(source, /\["Drone／DFR", "26"/);
+  assert.match(source, /\["Drone\/DFR", "26"/);
   assert.match(source, /\["本次新增", "03"/);
   assert.match(source, /value: "未定案"/);
   assert.match(source, /value: "導入中"/);
@@ -146,9 +147,18 @@ test("intelligence database supports 30/60-day range and incremental loading", a
 
 test("uses explicit cross-region and other-Europe labels", async () => {
   const source = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
-  assert.match(source, /value: "Europe-Other", zh: "歐洲／其他地區"/);
-  assert.match(source, /value: "Global", zh: "跨區／全球性"/);
+  assert.match(source, /value: "Europe-Other", zh: "歐洲\/其他地區"/);
+  assert.match(source, /value: "Global", zh: "跨區\/全球性"/);
   assert.match(source, /region: "Europe-Other"[\s\S]*Cleveland Police/);
   assert.match(source, /getRegionLabel\(item\.region, lang\)/);
   assert.doesNotMatch(source, /region: "Global"[\s\S]{0,180}Cleveland Police/);
+});
+
+test("uses the requested locale fonts and avoids fullwidth slashes and dash punctuation", async () => {
+  const response = await render();
+  const html = await response.text();
+  const source = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
+
+  assert.match(html, /class="site-shell lang-zh"/);
+  assert.doesNotMatch(source, /[／—–]/);
 });

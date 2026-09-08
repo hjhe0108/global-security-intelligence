@@ -3,7 +3,7 @@
 :root { --ink:#102c28; --navy:#102c28; --teal:#0f6e63; --mint:#b8d7cc; --paper:#f3f1e9; --cream:#ebe9e1; --line:#d2d3cc; --orange:#ff5a2b; --white:#faf9f4; }
 * { box-sizing:border-box; }
 html { scroll-behavior:smooth; }
-body { margin:0; background:var(--paper); color:var(--ink); font-family:"Inter","Noto Sans TC","PingFang TC","Microsoft JhengHei",Arial,sans-serif; }
+body { margin:0; background:var(--paper); color:var(--ink); font-family:"Microsoft JhengHei","微軟正黑體",Arial,sans-serif; }
 button, input, select { font:inherit; }
 button, a, select { -webkit-tap-highlight-color:transparent; }
 .site-shell { min-height:100vh; }
@@ -581,7 +581,7 @@ footer { max-width:1380px; font-size:10px; line-height:1.7; }
   display:block;
   white-space:nowrap;
   color:#172d2a;
-  font-family:"Aptos Display","Segoe UI Variable Display","Helvetica Neue",Arial,sans-serif;
+  font-family:inherit;
   font-size:44px;
   font-weight:400;
   font-variant-numeric:lining-nums tabular-nums;
@@ -589,6 +589,16 @@ footer { max-width:1380px; font-size:10px; line-height:1.7; }
   line-height:.98;
   letter-spacing:-.035em;
   text-rendering:geometricPrecision;
+}
+
+/* Deliberately lock each language version to the requested system typeface. */
+.site-shell.lang-zh,
+.site-shell.lang-zh * {
+  font-family:"Microsoft JhengHei","微軟正黑體",Arial,sans-serif !important;
+}
+.site-shell.lang-en,
+.site-shell.lang-en * {
+  font-family:Calibri,"Segoe UI",Arial,sans-serif !important;
 }
 .number-grid .metric-compact>strong { font-size:56px; }
 .number-grid .metric-wide>strong { font-size:39px; letter-spacing:-.025em; }
