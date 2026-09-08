@@ -163,6 +163,13 @@ const stageByUrl: Record<string, MarketStage> = {
 
 const getMarketStage = (item: (typeof intelligence)[number]): MarketStage => stageByUrl[item.url] ?? "已運作";
 
+const getMetricSize = (value: string) => {
+  const length = value.replace(/\s/g, "").length;
+  if (length <= 3) return "metric-compact";
+  if (length <= 6) return "metric-regular";
+  return "metric-wide";
+};
+
 const copy = {
   zh: {
     nav: [["本週重點", "3 MIN READ"], ["市場分析報告", "FOR DECISION MAKERS"], ["情報資料庫", "60 DAY WINDOW"]],
@@ -368,7 +375,7 @@ function WeeklyView({ lang, onOpenReport }: { lang: Lang; onOpenReport: () => vo
   return <div className="view weekly-view"><PageIntro number="W37" eyebrow="THIS WEEK · 4 MIN READ" title={lang === "zh" ? "安防市場情報速覽" : "Security Market Brief"} description={t.hero} dateLabel={lang === "zh" ? "2026.09.08 · 資料與分析截至 09.08" : "2026.09.08 · DATA & ANALYSIS THROUGH 09.08"} />
     <section><div className="section-heading"><div><span className="eyebrow">01 · SIGNAL EVOLUTION</span><h2>{t.shifts}</h2></div><span className="count">04</span></div><div className="signal-grid two">{t.signals.map((signal, i) => <article className={`signal-card ${i === 0 ? "featured" : "dark"}`} key={signal.title}><div className="card-top"><span>{signal.tag}</span><span>W37</span></div><h3>{signal.title}</h3><p>{signal.body}</p><div className="why"><span>WHY IT MATTERS</span>{signal.why}</div><a href={signal.url} target="_blank" rel="noreferrer">{t.original} <span>↗</span></a></article>)}</div></section>
     <section className="impact-section"><div className="section-heading"><div><span className="eyebrow">POSSIBLE IMPACT</span><h2>{t.possibleImpact}</h2></div></div><div className="impact-grid">{t.impacts.map((item, i) => <div key={item[0]}><span className="impact-icon">{["P", "B", "L"][i]}</span><small>{item[0]}</small><h3>{item[1]}</h3><p>{item[2]}</p></div>)}</div></section>
-    <section className="numbers-section"><div><span className="eyebrow">MARKET NUMBERS</span><h2>{t.marketNumbers}</h2><p>{t.numberNote}</p></div><div className="number-grid">{t.numbers.map((item) => <div key={item[0]}><strong>{item[0]}</strong><span>{item[1]}</span></div>)}</div></section>
+    <section className="numbers-section"><div><span className="eyebrow">MARKET NUMBERS</span><h2>{t.marketNumbers}</h2><p>{t.numberNote}</p></div><div className="number-grid">{t.numbers.map((item, index) => <div className={`market-metric ${getMetricSize(item[0])}`} key={item[0]}><small aria-hidden="true">0{index + 1}</small><strong>{item[0]}</strong><span>{item[1]}</span></div>)}</div></section>
     <div className="report-cta"><div><span className="eyebrow">GO DEEPER</span><h2>{t.goDeeper}</h2><p>{t.goText}</p></div><button onClick={onOpenReport}>{t.readReport} <span>→</span></button></div><p className="data-note">{t.dataNote}</p>
   </div>;
 }

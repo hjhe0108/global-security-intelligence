@@ -48,6 +48,21 @@ test("renders the requested market-report visual structure", async () => {
   assert.doesNotMatch(html, /INDEXED|DAILY VERIFIED|WEEKLY VERIFIED|已複核訊號/);
 });
 
+test("market numbers adapt to value length and responsive widths", async () => {
+  const response = await render();
+  const html = await response.text();
+  const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
+
+  assert.match(html, /class="market-metric metric-compact"/);
+  assert.match(html, /class="market-metric metric-regular"/);
+  assert.match(html, /class="market-metric metric-wide"/);
+  assert.match(css, /\.market-metric\.metric-compact\s*\{\s*flex:/);
+  assert.match(css, /\.market-metric\.metric-wide\s*\{\s*flex:/);
+  assert.match(css, /"Segoe UI Variable Display"/);
+  assert.match(css, /font-variant-numeric:lining-nums tabular-nums/);
+  assert.match(css, /@media \(max-width:1180px\)[\s\S]*\.number-grid \{ display:grid; grid-template-columns:repeat\(2,minmax\(0,1fr\)\); \}/);
+});
+
 test("includes verified Europe and Middle East regional records", async () => {
   const source = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
   assert.match(source, /region: "Europe-DE"/);
