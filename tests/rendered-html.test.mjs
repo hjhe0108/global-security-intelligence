@@ -26,11 +26,11 @@ test("server-renders the security intelligence portal", async () => {
   assert.match(html, /市場分析報告/);
   assert.match(html, /情報資料庫/);
   assert.match(html, /W37/);
-  assert.match(html, /資料與分析截至 09\.07/);
-  assert.match(html, /Flock 成為美國跨黨派選舉議題/);
-  assert.match(html, /Flock 以 Traffic Analytics 的資料隔離回應治理疑慮/);
-  assert.match(html, /Fairfax County 公布 LPR 警示銜接無人機的實際案例/);
-  assert.match(html, /Ventura County 的 Axon DFR 長約仍是平台化採購指標/);
+  assert.match(html, /資料與分析截至 09\.08/);
+  assert.match(html, /警務主管公開反對跨供應商整合費/);
+  assert.match(html, /Flock 用『不做人臉辨識』區隔其他 LPR 廠商/);
+  assert.match(html, /柏林規格把行為偵測、移動攝影機與無人機列入同一試辦/);
+  assert.match(html, /Dubai Police 將無人機延伸到海上污染應變/);
   assert.match(html, /Language/);
   assert.doesNotMatch(html, /codex-preview|Building your site|Your site is taking shape/i);
 });
@@ -55,7 +55,7 @@ test("includes verified Europe and Middle East regional records", async () => {
   assert.match(source, /region: "Middle East"/);
   assert.match(source, /法國憲兵破獲監獄無人機運毒網/);
   assert.match(source, /阿布達比完成第二次自主巡邏船實地試驗/);
-  assert.match(source, /柏林規劃在 Kottbusser Tor/);
+  assert.match(source, /柏林 AI 影像試辦規格納入固定與移動攝影機/);
   assert.match(source, /Texas 州長要求州機關暫停以州資金採購 Flock 攝影機/);
   assert.match(source, /Boston Police 啟動 Motorola Solutions 與 BRINC 的 DFR 試辦/);
   assert.match(source, /FAA 啟動 BEYOND Phase 2/);
@@ -76,9 +76,12 @@ test("includes verified Europe and Middle East regional records", async () => {
   assert.match(source, /Flock 說明 Traffic Analytics 僅保留彙總道路統計/);
   assert.match(source, /Flock ALPR 成為美國跨黨派選舉議題/);
   assert.match(source, /Fairfax County 公布三起以 Flock LPR 即時警示銜接無人機/);
-  assert.match(source, /\["資料庫總數", "58"/);
-  assert.match(source, /\["核心情報", "51"/);
-  assert.match(source, /\["Drone／DFR", "23"/);
+  assert.match(source, /NRTCCA DFR 主管呼籲公共安全機關拒付跨供應商整合費/);
+  assert.match(source, /Flock 高層以『不做人臉辨識』區隔其他 LPR 供應商/);
+  assert.match(source, /Dubai Police 展示採樣與噴灑無人機/);
+  assert.match(source, /\["資料庫總數", "61"/);
+  assert.match(source, /\["核心情報", "53"/);
+  assert.match(source, /\["Drone／DFR", "26"/);
   assert.match(source, /\["本次新增", "03"/);
   assert.match(source, /value: "未定案"/);
   assert.match(source, /value: "導入中"/);
@@ -99,6 +102,17 @@ test("report version selector loads distinct archived analysis", async () => {
   assert.match(source, /Anti-Flock does not equal anti-ALPR/);
   assert.match(source, /aria-controls="report-content"/);
   assert.doesNotMatch(source, /value="w31"/);
+});
+
+test("live report provides evidence links and a concrete competitive read", async () => {
+  const source = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
+  assert.match(source, /不是新聞摘要，而是本週訊號對採購、產品與競爭位置的實際影響/);
+  assert.match(source, /className="evidence-link"/);
+  assert.match(source, /競爭與商機判讀/);
+  assert.match(source, /competitiveItems/);
+  assert.match(source, /Axon、Flock、Genetec 與 DFR 專業廠商/);
+  assert.match(source, /AERODOME|Aerodome/);
+  assert.match(source, /live \? <section className="competitive-section"/);
 });
 
 test("intelligence database supports 30/60-day range and incremental loading", async () => {
