@@ -58,7 +58,7 @@ test("market numbers adapt to value length and responsive widths", async () => {
   assert.match(html, /class="market-metric metric-wide"/);
   assert.match(css, /\.market-metric\.metric-compact\s*\{\s*flex:/);
   assert.match(css, /\.market-metric\.metric-wide\s*\{\s*flex:/);
-  assert.match(css, /\.site-shell\.lang-zh[\s\S]*"Microsoft JhengHei"/);
+  assert.match(css, /\.site-shell\.lang-zh[\s\S]*"Chiron Hei HK Variable"/);
   assert.match(css, /\.site-shell\.lang-en[\s\S]*font-family:Calibri/);
   assert.match(css, /font-variant-numeric:lining-nums tabular-nums/);
   assert.match(css, /@media \(max-width:1180px\)[\s\S]*\.number-grid \{ display:grid; grid-template-columns:repeat\(2,minmax\(0,1fr\)\); \}/);
@@ -160,5 +160,6 @@ test("uses the requested locale fonts and avoids fullwidth slashes and dash punc
   const source = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
 
   assert.match(html, /class="site-shell lang-zh"/);
+  assert.match(await readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"), /@fontsource-variable\/chiron-hei-hk\/wght\.css/);
   assert.doesNotMatch(source, /[／—–]/);
 });
