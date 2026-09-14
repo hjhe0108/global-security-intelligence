@@ -25,12 +25,12 @@ test("server-renders the security intelligence portal", async () => {
   assert.match(html, /本週重點/);
   assert.match(html, /市場分析報告/);
   assert.match(html, /情報資料庫/);
-  assert.match(html, /W37/);
-  assert.match(html, /資料與分析截至 09\.11/);
-  assert.match(html, /Bellevue 啟動一年期試辦，St\. Paul 暫停擴張/);
-  assert.match(html, /德國聯邦警察把偵測與處置設備分成兩項標案/);
-  assert.match(html, /法國憲兵用兩支專責單位把 Drone 納入常態編制/);
-  assert.match(html, /Stockholm 以明確時段和區域核准無人機影像監控/);
+  assert.match(html, /W38/);
+  assert.match(html, /資料與分析截至 09\.14/);
+  assert.match(html, /Calgary 用 90 天與兩架 Skydio X10 驗證 DFR/);
+  assert.match(html, /Englewood 終止 Flock，但 Axon 替代案同票未過/);
+  assert.match(html, /Anthropic 揭露 Claude Code 被用來開發攻擊無人機蜂群/);
+  assert.match(html, /沙烏地輸油管遭多架無人機攻擊/);
   assert.match(html, /Language/);
   assert.doesNotMatch(html, /codex-preview|Building your site|Your site is taking shape/i);
 });
@@ -103,9 +103,14 @@ test("includes verified Europe and Middle East regional records", async () => {
   assert.match(source, /Stockholm 核准 9 月 12 至 14 日/);
   assert.match(source, /法國國家憲兵成立兩支專責無人機單位/);
   assert.match(source, /Bellevue 核准 Skydio 一年期 DFR 試辦/);
-  assert.match(source, /\["資料庫總數", "75"/);
-  assert.match(source, /\["核心情報", "66"/);
-  assert.match(source, /\["Drone\/DFR", "35"/);
+  assert.match(source, /Calgary Police 啟動 90 天 DFR 試辦/);
+  assert.match(source, /Englewood 終止 Flock ALPR/);
+  assert.match(source, /Anthropic 表示已阻止行為者/);
+  assert.match(source, /沙烏地阿拉伯表示東西輸油管/);
+  assert.match(source, /明尼蘇達大學因社區信任疑慮/);
+  assert.match(source, /\["資料庫總數", "80"/);
+  assert.match(source, /\["核心情報", "71"/);
+  assert.match(source, /\["Drone\/DFR", "38"/);
   assert.match(source, /\["本次新增", "05"/);
   assert.match(source, /value: "未定案"/);
   assert.match(source, /value: "導入中"/);
@@ -119,7 +124,7 @@ test("includes verified Europe and Middle East regional records", async () => {
 test("report version selector loads distinct archived analysis", async () => {
   const source = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
   assert.match(source, /value="last"/);
-  assert.match(source, /value="w35"/);
+  assert.match(source, /value="w36"/);
   assert.match(source, /平台黏著正在主導大型 BWC 續約/);
   assert.match(source, /反 Flock 不等於反 ALPR/);
   assert.match(source, /Platform lock-in is shaping major BWC renewals/);
@@ -134,7 +139,7 @@ test("live report provides evidence links and a concrete competitive read", asyn
   assert.match(source, /className="evidence-link"/);
   assert.match(source, /競爭與商機判讀/);
   assert.match(source, /competitiveItems/);
-  assert.match(source, /把事件觸發、飛行區域、住宅遮蔽、保存和調閱稽核做成 DFR 驗收清單/);
+  assert.match(source, /建立 90 天 DFR 試辦量測表與轉正式部署門檻/);
   assert.match(source, /AERODOME|Aerodome/);
   assert.match(source, /live \? <section className="competitive-section"/);
 });
