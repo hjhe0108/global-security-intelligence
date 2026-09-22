@@ -476,7 +476,7 @@ function ReportView({ lang, version, setVersion }: { lang: Lang; version: Report
   const archivedVersion = version === "last" ? "last" : "w36";
   const reportData = live ? {
     week: "W39",
-    dateLabel: lang === "zh" ? "2026.09.21 · 資料與分析截至 09.21" : "2026.09.21 · DATA & ANALYSIS THROUGH 09.21",
+    dateLabel: lang === "zh" ? "2026.09.22 · 資料與分析截至 09.22" : "2026.09.22 · DATA & ANALYSIS THROUGH 09.22",
     conclusionItems: t.conclusionItems,
     flow: t.flow,
     assessmentText: t.assessmentText,
