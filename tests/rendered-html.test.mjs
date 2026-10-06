@@ -25,12 +25,12 @@ test("server-renders the security intelligence portal", async () => {
   assert.match(html, /本週重點/);
   assert.match(html, /市場分析報告/);
   assert.match(html, /情報資料庫/);
-  assert.match(html, /W40/);
-  assert.match(html, /資料與分析截至 10\.02/);
-  assert.match(html, /Red Deer DFR 已完成約 324 次飛行/);
-  assert.match(html, /Denton 把 DFR 飛行綁定 911 案件並公開紀錄/);
-  assert.match(html, /Qatar 把 Drone 開放區域與時段放進 Metrash/);
-  assert.match(html, /Seattle 稽核要求補上 RTCC 與交通攝影機的書面規則/);
+  assert.match(html, /W41/);
+  assert.match(html, /資料與分析截至 10\.06/);
+  assert.match(html, /德國把 Drone 偵測推進八座主要機場/);
+  assert.match(html, /奧地利 29 所監獄導入可直播 BWC/);
+  assert.match(html, /Missouri 建立州級 ALPR 部署與資料使用門檻/);
+  assert.match(html, /ALPR 治理缺口開始轉成實際成本/);
   assert.match(html, /Language/);
   assert.doesNotMatch(html, /codex-preview|Building your site|Your site is taking shape/i);
 });
@@ -52,10 +52,11 @@ test("market numbers adapt to value length and responsive widths", async () => {
   const response = await render();
   const html = await response.text();
   const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
+  const source = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
 
   assert.match(html, /class="market-metric metric-compact"/);
-  assert.match(html, /class="market-metric metric-regular"/);
-  assert.match(html, /class="market-metric metric-wide"/);
+  assert.match(source, /length <= 6\) return "metric-regular"/);
+  assert.match(source, /return "metric-wide"/);
   assert.match(css, /\.market-metric\.metric-compact\s*\{\s*flex:/);
   assert.match(css, /\.market-metric\.metric-wide\s*\{\s*flex:/);
   assert.match(css, /\.site-shell\.lang-zh[\s\S]*"Chiron Hei HK Variable"/);
@@ -127,9 +128,9 @@ test("includes verified Europe and Middle East regional records", async () => {
   assert.match(source, /Seattle 稽核發現 RTCC 使用交通攝影機/);
   assert.match(source, /義大利以第 160 號法令建立警方即時人臉辨識/);
   assert.match(source, /discoverySource: \["ipvm", "google_alerts", "public_search"\]/);
-  assert.match(source, /\["資料庫總數", "126"/);
-  assert.match(source, /\["核心情報", "114"/);
-  assert.match(source, /\["Drone\/DFR", "51"/);
+  assert.match(source, /\["資料庫總數", "131"/);
+  assert.match(source, /\["核心情報", "119"/);
+  assert.match(source, /\["Drone\/DFR", "52"/);
   assert.match(source, /\["本次新增", "05"/);
   assert.match(source, /value: "未定案"/);
   assert.match(source, /value: "導入中"/);
@@ -143,7 +144,7 @@ test("includes verified Europe and Middle East regional records", async () => {
 test("report version selector loads distinct archived analysis", async () => {
   const source = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
   assert.match(source, /value="last"/);
-  assert.match(source, /value="w36"/);
+  assert.match(source, /value="w39"/);
   assert.match(source, /平台黏著正在主導大型 BWC 續約/);
   assert.match(source, /反 Flock 不等於反 ALPR/);
   assert.match(source, /Platform lock-in is shaping major BWC renewals/);
@@ -158,7 +159,7 @@ test("live report provides evidence links and a concrete competitive read", asyn
   assert.match(source, /className="evidence-link"/);
   assert.match(source, /競爭與商機判讀/);
   assert.match(source, /competitiveItems/);
-  assert.match(source, /建立 DFR 成效資料字典與試辦驗收表/);
+  assert.match(source, /建立 Counter-UAS 告警到處置的交接驗收表/);
   assert.match(source, /AERODOME|Aerodome/);
   assert.match(source, /live \? <section className="competitive-section"/);
 });
