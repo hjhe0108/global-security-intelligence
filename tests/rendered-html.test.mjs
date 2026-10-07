@@ -128,10 +128,12 @@ test("includes verified Europe and Middle East regional records", async () => {
   assert.match(source, /Seattle 稽核發現 RTCC 使用交通攝影機/);
   assert.match(source, /義大利以第 160 號法令建立警方即時人臉辨識/);
   assert.match(source, /discoverySource: \["ipvm", "google_alerts", "public_search"\]/);
-  assert.match(source, /\["資料庫總數", "135"/);
-  assert.match(source, /\["核心情報", "123"/);
+  assert.match(source, /\["資料庫總數", "136"/);
+  assert.match(source, /\["核心情報", "124"/);
   assert.match(source, /\["Drone\/DFR", "52"/);
-  assert.match(source, /\["本次新增", "04"/);
+  assert.match(source, /\["本次新增", "05"/);
+  assert.match(source, /Delhi Police 已向抗議現場人員發放 BWC/);
+  assert.match(source, /discoverySource: \["google_alerts", "user_supplied", "public_search"\]/);
   assert.match(source, /value: "未定案"/);
   assert.match(source, /value: "導入中"/);
   assert.match(source, /value: "已運作"/);
