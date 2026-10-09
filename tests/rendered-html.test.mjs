@@ -26,11 +26,11 @@ test("server-renders the security intelligence portal", async () => {
   assert.match(html, /市場分析報告/);
   assert.match(html, /情報資料庫/);
   assert.match(html, /W41/);
-  assert.match(html, /資料與分析截至 10\.07/);
-  assert.match(html, /奧克拉荷馬法院把長期 ALPR 行蹤查詢視為搜索/);
-  assert.match(html, /Schumer 要求 Flock 在 10 月 16 日前回覆資料治理問題/);
-  assert.match(html, /SFPD 以 BriefCam 串接 Flock、私人與市有影像/);
-  assert.match(html, /Delaware County 將 Axon BWC 與即時翻譯一起上線/);
+  assert.match(html, /資料與分析截至 10\.08/);
+  assert.match(html, /Caldwell 用十年 Axon 合約取代 Flock/);
+  assert.match(html, /Cincinnati 暫停 ALPR 擴充，先處理資料規則/);
+  assert.match(html, /眾議員要求 FBI 說明全國 ALPR 網路的使用邊界/);
+  assert.match(html, /NCSL 統計至少 28 州已有 ALPR 明文規範/);
   assert.match(html, /Language/);
   assert.doesNotMatch(html, /codex-preview|Building your site|Your site is taking shape/i);
 });
@@ -128,10 +128,14 @@ test("includes verified Europe and Middle East regional records", async () => {
   assert.match(source, /Seattle 稽核發現 RTCC 使用交通攝影機/);
   assert.match(source, /義大利以第 160 號法令建立警方即時人臉辨識/);
   assert.match(source, /discoverySource: \["ipvm", "google_alerts", "public_search"\]/);
-  assert.match(source, /\["資料庫總數", "136"/);
-  assert.match(source, /\["核心情報", "124"/);
-  assert.match(source, /\["Drone\/DFR", "52"/);
-  assert.match(source, /\["本次新增", "05"/);
+  assert.match(source, /\["資料庫總數", "140"/);
+  assert.match(source, /\["核心情報", "128"/);
+  assert.match(source, /\["Drone\/DFR", "54"/);
+  assert.match(source, /\["本次新增", "04"/);
+  assert.match(source, /Caldwell 核准 10 年 670 萬美元 Axon 整合案/);
+  assert.match(source, /Cincinnati 暫停 30 至 50 部 ALPR 擴充審查/);
+  assert.match(source, /兩名眾議員要求 FBI 說明擴大全國 ALPR 網路存取/);
+  assert.match(source, /NCSL 統整 2026 年 ALPR 立法趨勢/);
   assert.match(source, /Delhi Police 已向抗議現場人員發放 BWC/);
   assert.match(source, /discoverySource: \["google_alerts", "user_supplied", "public_search"\]/);
   assert.match(source, /value: "未定案"/);
@@ -161,21 +165,26 @@ test("live report provides evidence links and a concrete competitive read", asyn
   assert.match(source, /className="evidence-link"/);
   assert.match(source, /競爭與商機判讀/);
   assert.match(source, /competitiveItems/);
-  assert.match(source, /建立 ALPR 查詢分級與司法文件驗證規格/);
+  assert.match(source, /建立州別 ALPR 控制矩陣與預設政策範本/);
   assert.match(source, /AERODOME|Aerodome/);
   assert.match(source, /live \? <section className="competitive-section"/);
 });
 
-test("intelligence database supports 30/60-day range and incremental loading", async () => {
+test("intelligence database permanently retains records with 30/60-day and full-archive views", async () => {
   const source = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
-  assert.match(source, /type RangeDays = 30 \| 60/);
+  assert.match(source, /type RangeDays = 30 \| 60 \| "all"/);
   assert.match(source, /useState<RangeDays>\(30\)/);
   assert.match(source, /rangeDays=\{rangeDays\}/);
   assert.match(source, /<option value=\{30\}>/);
   assert.match(source, /<option value=\{60\}>/);
+  assert.match(source, /<option value="all">\{t\.rangeLabels\[2\]\}<\/option>/);
+  assert.match(source, /rangeDays === "all" \|\| ageDays < rangeDays/);
+  assert.match(source, /never prune them/);
   assert.match(source, /filtered\.slice\(0, visibleCount\)/);
   assert.match(source, /setVisibleCount\(\(count\) => count \+ 20\)/);
-  assert.match(source, /60 DAY WINDOW/);
+  assert.match(source, /FULL ARCHIVE/);
+  assert.match(source, /所有已收錄情報永久保留/);
+  assert.match(source, /permanently retains every collected record/);
   assert.match(source, /載入更多/);
   assert.match(source, /Load more/);
 });
