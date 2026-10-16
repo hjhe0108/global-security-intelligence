@@ -26,7 +26,7 @@ test("server-renders the security intelligence portal", async () => {
   assert.match(html, /市場分析報告/);
   assert.match(html, /情報資料庫/);
   assert.match(html, /W42/);
-  assert.match(html, /資料與分析截至 10\.15/);
+  assert.match(html, /資料與分析截至 10\.16/);
   assert.match(html, /GAO 要求 CBP 與 ICE 補齊 BWC 管理與現場指引/);
   assert.match(html, /Flock 表示從未因濫用終止警務客戶/);
   assert.match(html, /Dane County 提案以 300 萬美元啟動 Sheriff BWC 計畫/);
