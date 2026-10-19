@@ -26,11 +26,11 @@ test("server-renders the security intelligence portal", async () => {
   assert.match(html, /市場分析報告/);
   assert.match(html, /情報資料庫/);
   assert.match(html, /W42/);
-  assert.match(html, /資料與分析截至 10\.16/);
+  assert.match(html, /資料與分析截至 10\.19/);
   assert.match(html, /GAO 要求 CBP 與 ICE 補齊 BWC 管理與現場指引/);
-  assert.match(html, /Flock 表示從未因濫用終止警務客戶/);
-  assert.match(html, /Dane County 提案以 300 萬美元啟動 Sheriff BWC 計畫/);
-  assert.match(html, /Lakeland 核准 2,190 萬美元 Axon 十年整合案/);
+  assert.match(html, /Tempe 通過警務 ALPR 禁令/);
+  assert.match(html, /Penn State 移除 20 部 Flock 攝影機/);
+  assert.match(html, /Tampa 核准 59\.5 萬美元 Peregrine 平台/);
   assert.match(html, /Language/);
   assert.doesNotMatch(html, /codex-preview|Building your site|Your site is taking shape/i);
 });
@@ -128,9 +128,9 @@ test("includes verified Europe and Middle East regional records", async () => {
   assert.match(source, /Seattle 稽核發現 RTCC 使用交通攝影機/);
   assert.match(source, /義大利以第 160 號法令建立警方即時人臉辨識/);
   assert.match(source, /discoverySource: \["ipvm", "google_alerts", "public_search"\]/);
-  assert.match(source, /\["資料庫總數", "161"/);
-  assert.match(source, /\["核心情報", "148"/);
-  assert.match(source, /\["Drone\/DFR", "63"/);
+  assert.match(source, /\["資料庫總數", "165"/);
+  assert.match(source, /\["核心情報", "152"/);
+  assert.match(source, /\["Drone\/DFR", "64"/);
   assert.match(source, /\["本次新增", "04"/);
   assert.match(source, /GAO 指出 CBP 與 ICE 的 BWC 計畫欠缺更新管理/);
   assert.match(source, /Flock 表示從未因產品濫用終止警務客戶/);
