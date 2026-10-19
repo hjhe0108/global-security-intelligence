@@ -27,7 +27,7 @@ test("server-renders the security intelligence portal", async () => {
   assert.match(html, /情報資料庫/);
   assert.match(html, /W42/);
   assert.match(html, /資料與分析截至 10\.19/);
-  assert.match(html, /GAO 要求 CBP 與 ICE 補齊 BWC 管理與現場指引/);
+  assert.match(html, /美國眾議員提出全面限制自動化監控的法案/);
   assert.match(html, /Tempe 通過警務 ALPR 禁令/);
   assert.match(html, /Penn State 移除 20 部 Flock 攝影機/);
   assert.match(html, /Tampa 核准 59\.5 萬美元 Peregrine 平台/);
@@ -128,10 +128,10 @@ test("includes verified Europe and Middle East regional records", async () => {
   assert.match(source, /Seattle 稽核發現 RTCC 使用交通攝影機/);
   assert.match(source, /義大利以第 160 號法令建立警方即時人臉辨識/);
   assert.match(source, /discoverySource: \["ipvm", "google_alerts", "public_search"\]/);
-  assert.match(source, /\["資料庫總數", "165"/);
-  assert.match(source, /\["核心情報", "152"/);
+  assert.match(source, /\["資料庫總數", "166"/);
+  assert.match(source, /\["核心情報", "153"/);
   assert.match(source, /\["Drone\/DFR", "64"/);
-  assert.match(source, /\["本次新增", "04"/);
+  assert.match(source, /\["本次新增", "01"/);
   assert.match(source, /GAO 指出 CBP 與 ICE 的 BWC 計畫欠缺更新管理/);
   assert.match(source, /Flock 表示從未因產品濫用終止警務客戶/);
   assert.match(source, /Dane County 2027 預算提案編列 300 萬美元/);
