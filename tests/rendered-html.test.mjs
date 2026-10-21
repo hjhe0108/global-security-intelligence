@@ -131,6 +131,7 @@ test("includes verified Europe and Middle East regional records", async () => {
   assert.match(source, /\["核心情報", "156"/);
   assert.match(source, /\["Drone\/DFR", "66"/);
   assert.match(source, /沙烏地設施安全部隊啟用安全 Drone 與指揮中心/);
+  assert.match(source, /資料截至 2026\.10\.21 · 09:29/);
   assert.match(source, /\["本次新增", "01"/);
   assert.match(source, /Savannah 警員因將 Flock 帳密交給 ICE 探員丈夫使用而遭解職/);
   assert.match(source, /Axon 公布聯邦機關新增逾 22,000 套 BWC 與證據授權/);
