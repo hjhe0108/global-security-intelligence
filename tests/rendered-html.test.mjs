@@ -26,7 +26,7 @@ test("server-renders the security intelligence portal", async () => {
   assert.match(html, /市場分析報告/);
   assert.match(html, /情報資料庫/);
   assert.match(html, /W43/);
-  assert.match(html, /資料與分析截至 10\.20/);
+  assert.match(html, /資料與分析截至 10\.21/);
   assert.match(html, /Axon 表示聯邦機關新增逾 22,000 套 BWC 與證據授權/);
   assert.match(html, /Savannah 警員因共用 Flock 帳密遭解職/);
   assert.match(html, /Tempe 通過警務 ALPR 禁令/);
@@ -127,10 +127,11 @@ test("includes verified Europe and Middle East regional records", async () => {
   assert.match(source, /Seattle 稽核發現 RTCC 使用交通攝影機/);
   assert.match(source, /義大利以第 160 號法令建立警方即時人臉辨識/);
   assert.match(source, /discoverySource: \["ipvm", "google_alerts", "public_search"\]/);
-  assert.match(source, /\["資料庫總數", "168"/);
-  assert.match(source, /\["核心情報", "155"/);
-  assert.match(source, /\["Drone\/DFR", "65"/);
-  assert.match(source, /\["本次新增", "02"/);
+  assert.match(source, /\["資料庫總數", "169"/);
+  assert.match(source, /\["核心情報", "156"/);
+  assert.match(source, /\["Drone\/DFR", "66"/);
+  assert.match(source, /沙烏地設施安全部隊啟用安全 Drone 與指揮中心/);
+  assert.match(source, /\["本次新增", "01"/);
   assert.match(source, /Savannah 警員因將 Flock 帳密交給 ICE 探員丈夫使用而遭解職/);
   assert.match(source, /Axon 公布聯邦機關新增逾 22,000 套 BWC 與證據授權/);
   assert.match(source, /GAO 指出 CBP 與 ICE 的 BWC 計畫欠缺更新管理/);
