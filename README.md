@@ -1,3 +1,5 @@
+2026/10/21
+
 # Global Security Intelligence
 
 A bilingual global security-market intelligence website. The same source tree
