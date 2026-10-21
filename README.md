@@ -1,8 +1,8 @@
-# vinext-starter
+# Global Security Intelligence
 
-A clean full-stack starter running on
-[vinext](https://github.com/cloudflare/vinext), with optional Cloudflare D1 and
-Drizzle support.
+A bilingual global security-market intelligence website. The same source tree
+supports the existing ChatGPT Sites deployment through Vinext and a separate
+Vercel deployment through Next.js.
 
 ## Prerequisites
 
@@ -15,6 +15,26 @@ npm install
 npm run dev
 npm run build
 ```
+
+For the Vercel-compatible local build:
+
+```bash
+npm ci
+npm run build:vercel
+```
+
+## Deployment workflow
+
+- `main` is the production branch on GitHub.
+- `npm run build` keeps the existing Vinext/ChatGPT Sites build path intact.
+- `npm run build:vercel` runs the Next.js production build used by Vercel.
+- `vercel.json` selects the Next.js preset, installs with `npm ci`, and runs the
+  Vercel-specific build command.
+- After the GitHub repository is connected to Vercel, pushes to feature
+  branches create Preview Deployments and updates to `main` create Production
+  Deployments.
+- `.vercel`, environment files, build output, local run records, and packaged
+  archives are excluded from Git.
 
 This starter does not use `wrangler.jsonc`.
 

@@ -326,7 +326,6 @@ const stageByUrl: Record<string, MarketStage> = {
   "https://www.linkedin.com/posts/abremayana_the-2026-national-real-time-crime-center-share-7499130912144732160-5VgJ/": "研究",
   "https://www.youtube.com/watch?v=TO0ATNBCMCs&t=374s": "研究",
   "https://www.wam.ae/en/article/c24l2hp-dubai-police-deploys-drones-satellite-technology": "研究",
-  "https://netzpolitik.org/2026/kameras-und-drohnen-in-berlin-was-verhaltensscanner-erkennen-sollen/": "導入中",
   "https://www.flocksafety.com/blog/what-is-traffic-analytics": "研究",
   "https://abcnews.com/US/wireStory/flock-surveillance-cameras-become-midterm-campaign-target-voters-136193734": "未定案",
   "https://fcpdnews.org/2026/09/04/lpr-and-drone-technology-leads-officers-to-multiple-arrests/": "已運作",

@@ -1,5 +1,5 @@
 {
-  "name": "site-creator-vinext-starter",
+  "name": "global-security-intelligence",
   "version": "0.1.0",
   "private": true,
   "engines": {
@@ -7,8 +7,11 @@
   },
   "scripts": {
     "dev": "vinext dev",
+    "dev:vercel": "next dev",
     "build": "vinext build",
+    "build:vercel": "next build",
     "start": "vinext start",
+    "start:vercel": "next start",
     "test": "npm run build && node --test tests/rendered-html.test.mjs",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next",
     "db:generate": "drizzle-kit generate"
@@ -16,13 +19,14 @@
   "dependencies": {
     "@fontsource-variable/chiron-hei-hk": "5.3.1",
     "drizzle-orm": "0.45.2",
+    "next": "16.4.2",
     "react": "19.2.6",
     "react-dom": "19.2.6"
   },
   "devDependencies": {
     "@cloudflare/vite-plugin": "1.37.1",
     "@eslint/js": "9.39.4",
-    "@next/eslint-plugin-next": "16.2.6",
+    "@next/eslint-plugin-next": "16.4.2",
     "@tailwindcss/postcss": "4.2.1",
     "@types/node": "22.19.19",
     "@types/react": "19.2.14",
