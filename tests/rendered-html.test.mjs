@@ -175,13 +175,23 @@ test("report version selector loads distinct archived analysis", async () => {
 
 test("live report provides evidence links and a concrete competitive read", async () => {
   const source = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
-  assert.match(source, /不是新聞摘要，而是本週訊號對採購、產品與競爭位置的實際影響/);
+  assert.match(source, /整理本週四個變化，以及提案時該問什麼、該準備什麼/);
   assert.match(source, /className="evidence-link"/);
-  assert.match(source, /競爭與商機判讀/);
+  assert.match(source, /競品動向與提案回應/);
   assert.match(source, /competitiveItems/);
-  assert.match(source, /建立 DFR 成效資料字典/);
+  assert.match(source, /提案準備清單/);
+  assert.match(source, /\["優先", "整合平台或長約"/);
+  assert.doesNotMatch(source, /\["HIGH", "整合平台或長約"/);
   assert.match(source, /AERODOME|Aerodome/);
   assert.match(source, /live \? <section className="competitive-section"/);
+  assert.match(source, /data-label=\{t\.competitiveHeads\[index \+ 1\]\}/);
+  assert.match(source, /Axon 聯邦市場公告[\s\S]*Reno Axon 核准結果[\s\S]*EFF 州級 ALPR 立法議程[\s\S]*Flock 離職後帳號存取調查/);
+  assert.match(source, /sort\(\(a, b\) => getItemTime\(b\) - getItemTime\(a\)\)/);
+  assert.match(source, /slice\(0, 3\)/);
+  assert.match(source, /filter\(\(tag\): tag is string => Boolean\(tag\)\)/);
+  assert.doesNotMatch(source, /if \(item\.publishedAt\) return new Date\(item\.publishedAt\)/);
+  assert.match(source, /tempe\.granicus[\s\S]*"已運作"/);
+  assert.match(source, /penn-state-pulls[\s\S]*"導入中"/);
 });
 
 test("intelligence database permanently retains records with 30/60-day and full-archive views", async () => {

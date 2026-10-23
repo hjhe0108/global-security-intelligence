@@ -689,3 +689,46 @@ footer { max-width:1380px; font-size:10px; line-height:1.7; }
   .intel-list article>.stage { grid-column:2; }
   .row-action { grid-column:3; grid-row:1; }
 }
+
+/* Proposal-report notes stay available without competing with the main analysis. */
+.coverage-method {
+  margin-top:16px;
+  border-top:1px solid var(--line);
+  color:#7b8586;
+}
+.coverage-method summary {
+  width:max-content;
+  padding:14px 0 6px;
+  color:var(--teal);
+  font-size:12px;
+  font-weight:700;
+  cursor:pointer;
+}
+.coverage-method p {
+  max-width:1000px;
+  margin:8px 0 0;
+  font-size:13px;
+  line-height:1.85;
+}
+
+/* Keep database counts legible while the result set changes. */
+.method-stats strong {
+  min-height:1em;
+  font-variant-numeric:tabular-nums;
+  opacity:1;
+}
+.results-meta strong {
+  display:inline-block;
+  min-width:2ch;
+  color:var(--ink);
+  font-variant-numeric:tabular-nums;
+}
+
+@media (max-width:760px) {
+  .competitive-row span:before,
+  .competitive-row span:nth-of-type(1):before,
+  .competitive-row span:nth-of-type(2):before,
+  .competitive-row span:nth-of-type(3):before {
+    content:attr(data-label);
+  }
+}
